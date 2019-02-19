@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script type="text/javascript" src="js/lay/modules/form.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
+    <script type="text/javascript" src="js/actions.js"></script>
+    <link rel="stylesheet" href="css/layui.css">
+</head>
+<body>
+
+<form class="layui-form" id="add_f">
+
+      <div class="layui-form-item">
+    <label class="layui-form-label">坐标系名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="a_name" lay-verify="title" autocomplete="off" placeholder="请输入坐标系名称" class="layui-input">
+    </div>
+  </div>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">坐标系编号</label>
+    <div class="layui-input-block">
+      <input type="text" name="a_id" lay-verify="title" autocomplete="off" placeholder="请输入坐标系编号" class="layui-input">
+    </div>
+  </div>
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">GPS经度</label>
+    <div class="layui-input-block">
+      <input type="text" name="a_gps_jd" lay-verify="title" autocomplete="off" placeholder="请输入经度" class="layui-input">
+    </div>
+  </div>
+
+    <div class="layui-form-item">
+    <label class="layui-form-label">GPS纬度</label>
+    <div class="layui-input-block">
+       <input type="text" name="a_gps_wd" lay-verify="title" autocomplete="off" placeholder="请输入纬度" class="layui-input">
+    </div>
+  </div>
+
+        <div class="layui-form-item">
+    <label class="layui-form-label">X长</label>
+    <div class="layui-input-block">
+       <input type="text" name="a_x_length" lay-verify="title" autocomplete="off" placeholder="请输入X长" class="layui-input">
+    </div>
+  </div>
+
+            <div class="layui-form-item">
+    <label class="layui-form-label">Y长</label>
+    <div class="layui-input-block">
+       <input type="text" name="a_y_length" lay-verify="title" autocomplete="off" placeholder="请输入Y长" class="layui-input">
+    </div>
+  </div>
+
+                <div class="layui-form-item">
+    <label class="layui-form-label">角度</label>
+    <div class="layui-input-block">
+       <input type="text" name="a_tangle" lay-verify="title" autocomplete="off" placeholder="请输入角度" class="layui-input">
+    </div>
+  </div>
+
+
+
+
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" type="button" onclick="add_anchor($('#add_f').serializeJSON());return false;">立即提交</button>
+    </div>
+  </div>
+</form>
+
+</body>
+</html>

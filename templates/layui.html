@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>人员智能定位管理平台</title>
+  <link rel="stylesheet" href="{% static 'css/layui.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+     <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+     <script type="text/javascript" src="{% static 'js/xadmin.js' %}"></script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=5F5XyrNizCq2KgtGb2NG7Q3ugicfCnGq"></script>
+
+     <style type="text/css">
+        body, html,#allmap {width: auto;height: 100%;position:relative;margin:0;font-family:"微软雅黑";}
+
+        body, html{
+            width:100%;
+        }
+        .layui-nav-tree .layui-nav-item .test{
+            display: flex;
+
+        }
+        .layui-nav-tree .layui-nav-item .test img{
+            margin-right: 10px;
+        }
+
+li {
+
+    list-style-type: none;
+}
+
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">人员智能定位管理平台</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a href="javascript:void(0);" onclick="reload_all()">全部刷新</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">设备</a>
+        <dl class="layui-nav-child">
+          <dd><a href=""  onclick="x_admin_show('添加设备','{% static 'add_device.html' %}',600,400);return false;">添加设备</a></dd>
+          <dd><a href="" onclick="x_admin_show('添加基站','{% static 'add_anchor.html' %}',600,400);return false;">添加基站</a></dd>
+          <dd><a href="" onclick="x_admin_show('设备列表','{% static 'device_list.html' %}',520,400);return false;">设备列表</a></dd>
+          <dd><a href="" onclick="x_admin_show('基站列表','{% static 'anchor_list.html' %}',725,400);return false;">基站列表</a></dd>
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="{% static 'images/default-img.png' %}" class="layui-nav-img">
+            <span id="username">{{ username }}</span>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href=""  onclick="x_admin_show('修改资料','{% static 'user_edit.html' %}',600,400);return false;">基本资料</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item" ><a href="/api/user/logout/">退出</a></li>
+    </ul>
+  </div>
+
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul id="dispaly_panel" class="layui-nav layui-nav-tree"  >
+        <li class="layui-nav-item" style="display: none">
+            <div class="test">
+                <a href="javascript:void(0);" class="single-disp" >云市场</a>
+                <img src="{% static 'images/icon-yes.svg' %}">
+                    <!--_n:编号  _j:经度  _w:维度-->
+                <input  hidden _n="SB001" _j="120.666" _w="36">
+            </div>
+        </li>
+
+
+
+
+      </ul>
+    </div>
+  </div>
+
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+      <div id="allmap"></div>
+  </div>
+
+  <div class="layui-footer">
+    © 中国石化青岛安全工程研究院
+  </div>
+</div>
+<script src="{% static 'js/layui.js' %}"></script>
+<script>
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
+
+});
+
+</script>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	map = new BMap.Map("allmap");
+	map.centerAndZoom("青岛", 13);
+   map.enableScrollWheelZoom();                 //启用滚轮放大缩小
+</script>

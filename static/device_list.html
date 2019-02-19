@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="css/layui.css"  media="all">
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/actions.js"></script>
+
+</head>
+<body>
+
+<table class="layui-hide" id="idTest" lay-filter="demo"></table>
+
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+
+    table.render({
+       elem: '#idTest'
+    ,url:'/api/devices/'
+    ,cols: [[
+      {field:'d_name', title: '设备名称', width:150,align: 'center'}
+      ,{field:'d_number', title: '设备编号',width:150, align: 'center'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+      ,{field:'d_CONST_A', title: 'A', width:70, align: 'center'}
+      ,{field:'d_CONST_N', title: 'N', width:70,align: 'center'}
+      ,{fixed: 'right', title:'操作', toolbar: '#barDemo',width:70}
+    ]]
+  });
+
+
+
+  //监听工具条
+  table.on('tool(demo)', function(obj){
+    var data = obj.data;
+    if(obj.event === 'del'){
+      layer.confirm('真的删除这个设备吗？', function(index){
+       del_device(data.d_number);
+             obj.del();
+          layer.close(index);
+      });
+    }
+  });
+
+  $('.demoTable .layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+});
+</script>
+
+</body>
+</html>

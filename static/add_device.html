@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/layui.js"></script>
+    <script type="text/javascript" src="js/lay/modules/form.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
+    <script type="text/javascript" src="js/actions.js"></script>
+    <link rel="stylesheet" href="css/layui.css">
+</head>
+<body>
+
+<form class="layui-form" id="add_f">
+  <div class="layui-form-item">
+    <label class="layui-form-label">设备名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="d_name" lay-verify="title" autocomplete="off" placeholder="请输入设备名称" class="layui-input">
+    </div>
+  </div>
+
+      <div class="layui-form-item">
+    <label class="layui-form-label">设备编号</label>
+    <div class="layui-input-block">
+      <input type="text" name="d_number" lay-verify="title" autocomplete="off" placeholder="请输入设备编号" class="layui-input">
+    </div>
+  </div>
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">相对定位</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="d_located_style" lay-skin="switch" value="1" lay-text="ON|OFF"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>ON</em><i></i></div>
+    </div>
+  </div>
+
+
+          <div class="layui-form-item">
+    <label class="layui-form-label">A</label>
+    <div class="layui-input-block">
+      <input type="text" name="d_CONST_A" lay-verify="title" autocomplete="off" placeholder="请输入A" class="layui-input">
+    </div>
+  </div>
+
+
+          <div class="layui-form-item">
+    <label class="layui-form-label">N</label>
+    <div class="layui-input-block">
+      <input type="text" name="d_CONST_N" lay-verify="title" autocomplete="off" placeholder="请输入N" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" type="button" onclick="add_device($('#add_f').serializeJSON());return false;">立即提交</button>
+    </div>
+  </div>
+</form>
+
+</body>
+</html>

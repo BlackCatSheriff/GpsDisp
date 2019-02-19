@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟接口</title>
+
+        <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serializejson.js"></script>
+</head>
+<body>
+
+<form action="/api/device/upload/" method="post">
+    设备编号:<input type="text" name="device_id"/><br>
+    定位方式:<input type="text" name="method"/><br>
+    GPS_JD:<input type="text" name="gps_jd" value="120.38442818"/><br>
+    GPS_WD:<input type="text" name="gps_wd" value="36.1052149"/><br>
+    坐标编号:<input type="text" name="anchor_id"/><br>
+    数据包:<input type="text" name="data"/><br>
+    <button type="submit">提交</button>
+</form>
+</body>
+</html>
