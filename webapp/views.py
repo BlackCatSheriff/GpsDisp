@@ -75,7 +75,7 @@ def handler_anchor(requests):
     ans = dict()
     ans['code'] = ENUM.get('SERVER_ERR')
     if requests.method == 'POST':
-        req = json.loads(requests.body)
+        req = json.loads(requests.body.decode())
         try:
             Anchor.objects.get(a_id=req.get('a_id'))
             ans['code'] = ENUM.get('EXIST')
@@ -115,7 +115,7 @@ def handler_device(requests):
     ans = dict()
     ans['code'] = ENUM.get('SERVER_ERR')
     if requests.method == 'POST':
-        req = json.loads(requests.body)
+        req = json.loads(requests.body.decode())
         try:
             Device.objects.get(d_number=req.get('d_number'))
             ans['code'] = ENUM.get('EXIST')
@@ -140,7 +140,7 @@ def handler_user(requests):
     ans['code'] = -1
     # 修改用户密码
     if requests.method == 'PUT':
-        req = json.loads(requests.body)
+        req = json.loads(requests.body.decode())
         try:
             m = Manager.objects.get(m_name=req.get("username"))
             m.m_pwd = req.get('password')
@@ -158,7 +158,7 @@ def user_login(requests):
     ans['code'] = -1
     # 登陆请求
     if requests.method == 'POST':
-        req = json.loads(requests.body)
+        req = json.loads(requests.body.decode())
         try:
             Manager.objects.get(m_name=req.get("username"), m_pwd=req.get('password'))
             ans['code'] = 0
