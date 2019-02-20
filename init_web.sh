@@ -1,7 +1,12 @@
 #!/bin/sh 
-#更改所有用户权限组， var/log/啥的
+
+
 WEB_NAME="GpsDisp"
 PYTHON_IMG_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"
+
+# update permission
+sudo chown -R ubuntu.ubuntu /home/$WEB_NAME/
+sudo chown -R ubuntu.ubuntu /var/log/$WEB_NAME/
 
 # update computer time zone
 sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
@@ -33,6 +38,10 @@ sudo mkdir /var/log/$WEB_NAME
 # install 3-rd libs
 sudo /home/.pyenvs/$WEB_NAME/bin/pip install -r requestments.txt
 
+# check setting debug
+
+find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
+
 # open nginx, supervisor
 sudo service nginx start
 sudo service supervisor start
@@ -40,3 +49,5 @@ sudo service supervisor start
 # open firewall port
 sudo iptables -I INPUT -p tcp --dport 7777 -j ACCEPT
 sudo iptables-save
+
+lsof -i :8999
