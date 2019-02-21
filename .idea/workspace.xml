@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4fccfb57-23d9-41bf-b88e-695771d1532d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/init_web.sh" afterPath="$PROJECT_DIR$/init_web.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/nginx-hlc.conf" afterPath="$PROJECT_DIR$/nginx.conf" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/supervisor-hlc.conf" afterPath="$PROJECT_DIR$/supervisor.conf" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/update_GpsDisp.sh" afterPath="$PROJECT_DIR$/update_web.sh" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -49,7 +45,7 @@
         <entry file="file://$PROJECT_DIR$/webapp/server_views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="399">
-              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -982,7 +978,7 @@
     <entry file="file://$PROJECT_DIR$/webapp/server_views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
-          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>

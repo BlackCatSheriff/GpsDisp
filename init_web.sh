@@ -16,12 +16,13 @@ sudo mkdir /var/log/$WEB_NAME ~/.pip /home/.pyenvs/
 # create backup, update scripts directory
 sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME /home/update_web_shs
 
+# move update script
+sudo mv $WEB_BASE_DIR"update_web.sh" /home/update_web_shs/update_GpsDisp.sh
+
 # update permission
 sudo chown -R $USER.$USER $WEB_BASE_DIR
 sudo chown -R $USER.$USER /var/log/$WEB_NAME/
-
-# move update script
-sudo mv $WEB_BASE_DIR"update_web.sh" /home/update_web_shs/update_GpsDisp.sh
+sudo chmod +x /home/update_web_shs/update_GpsDisp.sh
 
 # remove default nginx configuration
 sudo rm -f /etc/nginx/sites-enabled/default
