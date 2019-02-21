@@ -14,8 +14,8 @@ echo "=== RELOAD SERVICES ==="
 sudo service nginx reload
 sudo service supervisor restart
 
+sudo service nginx status
 sudo service supervisor status
-sudo service supervisor nginx
 
 echo "=== TEST WEB ==="
 wget --spider -nv "$(curl -s ident.me)"":7777/"
