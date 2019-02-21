@@ -13,6 +13,9 @@ sudo apt-get -y install python-pip python-virtualenv python-dev nginx supervisor
 # create log, pip download configuration, python virtual env directory
 sudo mkdir /var/log/$WEB_NAME ~/.pip /home/.pyenvs/
 
+# create backup directory
+sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME
+
 # update permission
 sudo chown -R $USER.$USER $WEB_BASE_DIR
 sudo chown -R $USER.$USER /var/log/$WEB_NAME/
@@ -45,8 +48,6 @@ sudo service nginx restart
 sudo iptables -I INPUT -p tcp --dport 7777 -j ACCEPT
 sudo iptables-save
 
-lsof -i :8999
-
-curl "$(curl ident.me)"":7777/"
-
+# test
+echo "======================= TEST ======================="
 wget --spider -nv "$(curl -s ident.me)"":7777/"
