@@ -1,8 +1,7 @@
 #!/bin/sh 
-
 WEB_NAME="GpsDisp"
 PYTHON_IMG_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"
-WEB_BASE_DIR = /home/$WEB_NAME/
+WEB_BASE_DIR=/home/$WEB_NAME/
 LOGIN_USER= "$(whoami)"
 
 # update permission
