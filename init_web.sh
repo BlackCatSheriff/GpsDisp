@@ -11,14 +11,17 @@ sudo apt-get update
 sudo apt-get -y install python-pip python-virtualenv python-dev nginx supervisor
 
 # create log, pip download configuration, python virtual env directory
-sudo mkdir /var/log/$WEB_NAME ~/.pip /home/.pyenvs/
+sudo mkdir /var/log/$WEB_NAME ~/.pip /home/.pyenvs/ 
 
-# create backup directory
-sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME
+# create backup, update scripts directory
+sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME /home/update_web_shs
 
 # update permission
 sudo chown -R $USER.$USER $WEB_BASE_DIR
 sudo chown -R $USER.$USER /var/log/$WEB_NAME/
+
+# move update script
+sudo mv $WEB_BASE_DIR"update_GpsDisp" /home/update_web_shs/
 
 # remove default nginx configuration
 sudo rm -f /etc/nginx/sites-enabled/default
