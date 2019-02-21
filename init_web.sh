@@ -33,11 +33,13 @@ sudo pip install virtualenv
 sudo mkdir /home/.pyenvs/
 sudo virtualenv -p python3 --no-site-packages /home/.pyenvs/$WEB_NAME
 
+sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/$WEB_NAME
+
 # create log directory
 sudo mkdir /var/log/$WEB_NAME
 
 # install 3-rd libs
-sudo /home/.pyenvs/$WEB_NAME/bin/pip install -r requestments.txt
+sudo /home/.pyenvs/$WEB_NAME/bin/pip install -r $WEB_BASE_DIR"requestments.txt"
 
 # check setting debug
 find -name $WEB_BASE_DIR/$WEB_NAME/settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
