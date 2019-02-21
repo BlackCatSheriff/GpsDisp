@@ -21,14 +21,14 @@ sudo chown -R $USER.$USER $WEB_BASE_DIR
 sudo chown -R $USER.$USER /var/log/$WEB_NAME/
 
 # move update script
-sudo mv $WEB_BASE_DIR"update_GpsDisp.sh" /home/update_web_shs/
+sudo mv $WEB_BASE_DIR"update_web.sh" /home/update_web_shs/update_GpsDisp.sh
 
 # remove default nginx configuration
 sudo rm -f /etc/nginx/sites-enabled/default
 
 # add link this app nginx configuration
-sudo ln -s $WEB_BASE_DIR"nginx-hlc.conf" /etc/nginx/conf.d/nginx-hlc.conf
-sudo ln -s $WEB_BASE_DIR"supervisor-hlc.conf" /etc/supervisor/conf.d/supervisor-hlc.conf
+sudo ln -s $WEB_BASE_DIR"nginx.conf" /etc/nginx/conf.d/nginx-GpsDisp.conf
+sudo ln -s $WEB_BASE_DIR"supervisor.conf" /etc/supervisor/conf.d/supervisor-GpsDisp.conf
 
 # update python image url
 sudo echo -e "[global]\nindex-url = "$PYTHON_IMG_URL | sudo tee ~/.pip/pip.conf
