@@ -38,8 +38,8 @@ cd $WEB_BASE_DIR$WEB_NAME
 find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 
 # open nginx, supervisor
-sudo service supervisor start
-sudo service nginx start
+sudo service supervisor restart
+sudo service nginx restart
 
 # open firewall port
 sudo iptables -I INPUT -p tcp --dport 7777 -j ACCEPT
@@ -47,4 +47,6 @@ sudo iptables-save
 
 lsof -i :8999
 
-wget "$(curl ident.me)"":7777/"
+curl "$(curl ident.me)"":7777/"
+
+wget --spider -nv "$(curl -s ident.me)"":7777/"
