@@ -1,4 +1,4 @@
-# 数据库备份， /home/backup/database/<appname>
+#!/bin/sh 
 echo "==== BACK SOURCE ===="
 sudo tar -zcvf  /home/backup/src/GpsDisp/"$(date +%Y-%m-%d-%H-%M-%S)".tar.gz --exclude=/home/GpsDisp/.git --exclude=/home/GpsDisp/.idea /home/GpsDisp/
 

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4fccfb57-23d9-41bf-b88e-695771d1532d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/init_web.sh" afterPath="$PROJECT_DIR$/init_web.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/update_web.sh" afterPath="$PROJECT_DIR$/update_web.sh" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/gunicorn-config.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/init_web.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/nginx.conf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/supervisor.conf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/update_web.sh" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,8 +28,8 @@
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GpsDisp/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state relative-caret-position="200">
+              <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -55,7 +58,7 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4431">
+            <state relative-caret-position="4641">
               <caret line="221" column="28" lean-forward="false" selection-start-line="221" selection-start-column="28" selection-end-line="221" selection-end-column="28" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -74,53 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gunicorn-config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gunicorn-config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="SessionKeepMiddleWare.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/middleware/SessionKeepMiddleWare.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
               <caret line="8" column="51" lean-forward="false" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="supervisor.conf" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/supervisor.conf">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="10" column="32" lean-forward="false" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nginx.conf" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nginx.conf">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.virtualenvs/GpsDisp/Lib/site-packages/django/core/management/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6678">
-              <caret line="334" column="39" lean-forward="false" selection-start-line="334" selection-start-column="30" selection-end-line="334" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -187,6 +148,7 @@
         <option value="$PROJECT_DIR$/GpsDisp/settings.py" />
         <option value="$PROJECT_DIR$/supervisor-hlc.conf" />
         <option value="$PROJECT_DIR$/webapp/server_views.py" />
+        <option value="$PROJECT_DIR$/update_web.sh" />
       </list>
     </option>
   </component>
@@ -218,7 +180,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -241,12 +202,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="GpsDisp" />
+              <option name="myItemId" value="server-config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -552,7 +514,7 @@
     <frame x="-8" y="-8" width="1696" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20476772" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20721272" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32760474" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -625,13 +587,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common_static/js/lay/modules/mobile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/interface.md" />
     <entry file="file://$USER_HOME$/.virtualenvs/GpsDisp/Lib/site-packages/django/utils/translation/trans_real.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -897,7 +852,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -919,7 +873,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4431">
+        <state relative-caret-position="4641">
           <caret line="221" column="28" lean-forward="false" selection-start-line="221" selection-start-column="28" selection-end-line="221" selection-end-column="28" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -937,11 +891,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gunicorn-config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
+        <state relative-caret-position="147">
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -977,10 +929,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/update_web.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GpsDisp/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+        <state relative-caret-position="200">
+          <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
           <folding />
         </state>
       </provider>

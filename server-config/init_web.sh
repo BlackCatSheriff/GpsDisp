@@ -17,7 +17,7 @@ sudo mkdir /var/log/$WEB_NAME ~/.pip /home/.pyenvs/
 sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME /home/update_web_shs
 
 # move update script
-sudo mv $WEB_BASE_DIR"update_web.sh" /home/update_web_shs/update_GpsDisp.sh
+sudo mv $WEB_BASE_DIR"server-config/update_web.sh" /home/update_web_shs/update_GpsDisp.sh
 
 # update permission
 sudo chown -R $USER.$USER $WEB_BASE_DIR
@@ -28,8 +28,8 @@ sudo chmod +x /home/update_web_shs/update_GpsDisp.sh
 sudo rm -f /etc/nginx/sites-enabled/default
 
 # add link this app nginx configuration
-sudo ln -s $WEB_BASE_DIR"nginx.conf" /etc/nginx/conf.d/nginx-GpsDisp.conf
-sudo ln -s $WEB_BASE_DIR"supervisor.conf" /etc/supervisor/conf.d/supervisor-GpsDisp.conf
+sudo ln -s $WEB_BASE_DIR"server-config/nginx.conf" /etc/nginx/conf.d/nginx-GpsDisp.conf
+sudo ln -s $WEB_BASE_DIR"server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-GpsDisp.conf
 
 # update python image url
 sudo echo -e "[global]\nindex-url = "$PYTHON_IMG_URL | sudo tee ~/.pip/pip.conf
