@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4fccfb57-23d9-41bf-b88e-695771d1532d" name="Default" comment="" />
+    <list default="true" id="4fccfb57-23d9-41bf-b88e-695771d1532d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/init_web.sh" afterPath="$PROJECT_DIR$/init_web.sh" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,8 +88,8 @@
       <file leaf-file-name="supervisor-hlc.conf" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/supervisor-hlc.conf">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" column="21" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="21" />
+            <state relative-caret-position="210">
+              <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -974,8 +976,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/supervisor-hlc.conf">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="21" lean-forward="true" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="21" />
+        <state relative-caret-position="210">
+          <caret line="10" column="41" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
           <folding />
         </state>
       </provider>

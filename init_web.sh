@@ -19,7 +19,7 @@ sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME
 # update permission
 sudo chown -R $USER.$USER $WEB_BASE_DIR
 sudo chown -R $USER.$USER /var/log/$WEB_NAME/
-
+sudo chmod +x $WEB_BASE_DIR"update_web.sh"
 # remove default nginx configuration
 sudo rm -f /etc/nginx/sites-enabled/default
 
