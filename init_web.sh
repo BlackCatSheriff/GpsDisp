@@ -21,7 +21,7 @@ sudo chown -R $USER.$USER $WEB_BASE_DIR
 sudo chown -R $USER.$USER /var/log/$WEB_NAME/
 
 # move update script
-sudo mv $WEB_BASE_DIR"update_GpsDisp" /home/update_web_shs/
+sudo mv $WEB_BASE_DIR"update_GpsDisp.sh" /home/update_web_shs/
 
 # remove default nginx configuration
 sudo rm -f /etc/nginx/sites-enabled/default
