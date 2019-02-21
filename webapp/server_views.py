@@ -13,8 +13,10 @@ def config(requests):
     if handler:
         if handler == 'static_url':
             return HttpResponse(get_static_url())
-        if handler == 'test_git':
+        elif handler == 'test_git':
             return HttpResponse('return git update!!!!!!!!!!!!!!')
+        else:
+            HttpResponse(status=403)
     else:
         return HttpResponse(status=403)
 
