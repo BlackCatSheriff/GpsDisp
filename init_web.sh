@@ -25,7 +25,7 @@ sudo ln -s $WEB_BASE_DIR"nginx-hlc.conf" /etc/nginx/conf.d/nginx-hlc.conf
 sudo ln -s $WEB_BASE_DIR"supervisor-hlc.conf" /etc/supervisor/conf.d/supervisor-hlc.conf
 
 # update python image url
-sudo echo -e "[global]\nindex-url = "$PYTHON_IMG_URL > ~/.pip/pip.conf
+sudo echo -e "[global]\nindex-url = "$PYTHON_IMG_URL | sudo tee ~/.pip/pip.conf
 
 # build python virtual env
 sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/$WEB_NAME
