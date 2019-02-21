@@ -17,19 +17,19 @@ sudo mkdir /var/log/$WEB_NAME ~/.pip /home/.pyenvs/
 sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME /home/update_web_shs
 
 # move update script
-sudo mv $WEB_BASE_DIR"server-config/update_web.sh" /home/update_web_shs/update_$WEB_NAME.sh
+sudo mv $WEB_BASE_DIR"server-config/update_web.sh" /home/update_web_shs/update_GpsDisp.sh
 
 # update permission
 sudo chown -R $USER.$USER $WEB_BASE_DIR
 sudo chown -R $USER.$USER /var/log/$WEB_NAME/
-sudo chmod +x /home/update_web_shs/update_$WEB_NAME.sh
+sudo chmod +x /home/update_web_shs/update_GpsDisp.sh
 
 # remove default nginx configuration
 sudo rm -f /etc/nginx/sites-enabled/default
 
 # add link this app nginx configuration
-sudo ln -s $WEB_BASE_DIR"server-config/nginx.conf" /etc/nginx/conf.d/nginx-$WEB_NAME.conf
-sudo ln -s $WEB_BASE_DIR"server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-$WEB_NAME.conf
+sudo ln -s $WEB_BASE_DIR"server-config/nginx.conf" /etc/nginx/conf.d/nginx-GpsDisp.conf
+sudo ln -s $WEB_BASE_DIR"server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-GpsDisp.conf
 
 # update python image url
 sudo echo -e "[global]\nindex-url = "$PYTHON_IMG_URL | sudo tee ~/.pip/pip.conf
@@ -43,7 +43,7 @@ sudo /home/.pyenvs/$WEB_NAME/bin/pip install -r $WEB_BASE_DIR"requestments.txt"
 # check setting debug
 cd $WEB_BASE_DIR$WEB_NAME
 find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
-# update seetting.py 's STATIC_URL = '/$WEB_NAME/static/' same with nginx.conf
+# update seetting.py 's STATIC_URL = '/GpsDisp/static/' same with nginx.conf
 T_PATTERN="s|STATIC_URL = '/static/'|STATIC_URL = '/"$WEB_NAME"/static/'|g"
 find -name settings.py | xargs perl -pi -e "$T_PATTERN"
 
