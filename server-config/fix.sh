@@ -8,20 +8,6 @@ chown_fail_dirs=()
 config_link_files=("/etc/nginx/conf.d/nginx-GpsDisp.conf" "/etc/supervisor/conf.d/supervisor-GpsDisp.conf")
 ln_s_fail_files=()
 
-# begin
-check_apps
-check_dirs
-check_permissions
-check_config_symbolic_link
-check_update_web_sh
-check_nginx_default_config
-check_python_mirror
-check_virtualenv
-check_python_dependences
-check_settings_config
-check_port_opened
-# end
-
 # ================== function ==================
 # check install all apps success
 function check_apps(){
@@ -195,3 +181,17 @@ function print_title(){
 function print_tip(){
     echo -e "\033[40;32m"$1"\033[0m" 
 }
+
+# begin
+check_apps
+check_dirs
+check_permissions
+check_config_symbolic_link
+check_update_web_sh
+check_nginx_default_config
+check_python_mirror
+check_virtualenv
+check_python_dependences
+check_settings_config
+check_port_opened
+# end
