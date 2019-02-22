@@ -1,6 +1,5 @@
 #!/bin/sh 
 WEB_NAME="GpsDisp"
-PYTHON_IMG_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"
 WEB_BASE_DIR=/home/$WEB_NAME/
 
 # update computer time zone
@@ -32,7 +31,7 @@ sudo ln -s $WEB_BASE_DIR"server-config/nginx.conf" /etc/nginx/conf.d/nginx-$WEB_
 sudo ln -s $WEB_BASE_DIR"server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-$WEB_NAME.conf
 
 # update python image url
-sudo echo -e "[global]\nindex-url = "$PYTHON_IMG_URL | sudo tee ~/.pip/pip.conf
+sudo echo -e "[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple/" | sudo tee ~/.pip/pip.conf
 
 # build python virtual env
 sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/$WEB_NAME
@@ -57,4 +56,4 @@ sudo iptables-save
 
 # test
 echo "======================= TEST ======================="
-wget --spider -nv "$(curl -s ident.me)"":7777/"
+wget --spider -nv "$(curl -s http://ident.me/)"":7777/"

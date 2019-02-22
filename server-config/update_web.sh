@@ -10,8 +10,7 @@ git pull
 
 find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 # update seetting.py 's STATIC_URL = '/GpsDisp/static/' same with nginx.conf
-T_PATTERN="s|STATIC_URL = '/static/'|STATIC_URL = '/"$WEB_NAME"/static/'|g"
-find -name settings.py | xargs perl -pi -e "$T_PATTERN"
+find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
 
 echo "=== RELOAD SERVICES ==="
 sudo service nginx reload
@@ -21,4 +20,4 @@ sudo service nginx status
 sudo service supervisor status
 
 echo "=== TEST WEB ==="
-wget --spider -nv "$(curl -s ident.me)"":7777/"
+wget --spider -nv "$(curl -s http://ident.me/)"":7777/"
