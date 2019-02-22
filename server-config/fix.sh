@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 apps=("virtualenv" "nginx" "supervisor")
 install_fail_apps=()
 dirs=("/var/log/GpsDisp" "/home/ubuntu/.pip" "/home/.pyenvs" "/home/backup/src/GpsDisp" "/home/backup/db/GpsDisp" "/home/update_web_shs")
@@ -11,6 +11,15 @@ ln_s_fail_files=()
 # ================== function ==================
 # check install all apps success
 function check_apps(){
+    function isInstalled(){
+        result=$(echo $sys_apps | grep -w "$1")
+        if [[ "$result" != "" ]]
+        then
+            return 0
+        else
+            return -1
+        fi
+    }
     sys_apps="$(dpkg -l)"
     print_title "check apps install"
     for it in ${apps[@]};
@@ -22,15 +31,7 @@ function check_apps(){
         fi
     done
 
-    function isInstalled(){
-        result=$(echo $sys_apps | grep -w "$1")
-        if [[ "$result" != "" ]]
-        then
-            return 0
-        else
-            return -1
-        fi
-    }
+
     for it in ${install_fail_apps[@]};
     do
         print_tip "$it"" uninstalled"

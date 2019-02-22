@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash
 echo "==== BACK SOURCE ===="
 sudo tar -zcvf  /home/backup/src/GpsDisp/"$(date +%Y-%m-%d-%H-%M-%S)".tar.gz --exclude=/home/GpsDisp/.git --exclude=/home/GpsDisp/.idea /home/GpsDisp/
 
