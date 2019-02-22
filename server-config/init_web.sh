@@ -1,5 +1,5 @@
 #!/bin/sh 
-WEB_NAME="GpsDisp-hh"
+WEB_NAME="GpsDisp"
 WEB_BASE_DIR=/home/$WEB_NAME/
 
 # update computer time zone
@@ -56,4 +56,4 @@ sudo iptables-save
 
 # test
 echo "======================= TEST ======================="
-wget --spider -nv "$(curl -s http://ident.me/)"":7788/"
+wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"

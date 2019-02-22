@@ -1,11 +1,11 @@
 #!/bin/bash 
 apps=("virtualenv" "nginx" "supervisor")
 install_fail_apps=()
-dirs=("/var/log/GpsDisp-hh" "/home/ubuntu/.pip" "/home/.pyenvs" "/home/backup/src/GpsDisp-hh" "/home/backup/db/GpsDisp-hh" "/home/update_web_shs")
+dirs=("/var/log/GpsDisp" "/home/ubuntu/.pip" "/home/.pyenvs" "/home/backup/src/GpsDisp" "/home/backup/db/GpsDisp" "/home/update_web_shs")
 create_fail_dirs=()
-ubuntu_permissions_dirs=("/home/GpsDisp-hh/" "/var/log/GpsDisp-hh/")
+ubuntu_permissions_dirs=("/home/GpsDisp/" "/var/log/GpsDisp/")
 chown_fail_dirs=()
-config_link_files=("/etc/nginx/conf.d/nginx-GpsDisp-hh.conf" "/etc/supervisor/conf.d/supervisor-GpsDisp-hh.conf")
+config_link_files=("/etc/nginx/conf.d/nginx-GpsDisp.conf" "/etc/supervisor/conf.d/supervisor-GpsDisp.conf")
 ln_s_fail_files=()
 
 # ================== function ==================
@@ -85,18 +85,18 @@ function check_config_symbolic_link(){
     done
     if [[ ${#ln_s_fail_files[@]} -ne 0 ]]; then
         print_tip "have some sysbolic link not be built"
-        sudo ln -s "/home/GpsDisp-hh/server-config/nginx.conf" /etc/nginx/conf.d/nginx-GpsDisp-hh.conf
-        sudo ln -s "/home/GpsDisp-hh/server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-GpsDisp-hh.conf
+        sudo ln -s "/home/GpsDisp/server-config/nginx.conf" /etc/nginx/conf.d/nginx-GpsDisp.conf
+        sudo ln -s "/home/GpsDisp/server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-GpsDisp.conf
         print_tip "built success"
     fi
 }
 
 function check_update_web_sh(){
     print_title "check update web script"
-    if [ ! -x  "/home/update_web_shs/update_GpsDisp-hh.sh" ]; then
+    if [ ! -x  "/home/update_web_shs/update_GpsDisp.sh" ]; then
         print_tip "not found script"
-        exec_cmd "sudo cp /home/GpsDisp-hh/server-config/update_web.sh /home/update_web_shs/update_GpsDisp-hh.sh"
-        exec_cmd "sudo chmod +x /home/update_web_shs/update_GpsDisp-hh.sh"
+        exec_cmd "sudo cp /home/GpsDisp/server-config/update_web.sh /home/update_web_shs/update_GpsDisp.sh"
+        exec_cmd "sudo chmod +x /home/update_web_shs/update_GpsDisp.sh"
     fi
 }
 
@@ -119,22 +119,22 @@ function check_python_mirror(){
 # check python virtualenv include dir, python ,pip
 function check_virtualenv(){
     print_title "check virtualenv directory"
-    if [ ! -d  "/home/.pyenvs/GpsDisp-hh" ]; then
+    if [ ! -d  "/home/.pyenvs/GpsDisp" ]; then
         print_tip "python virtual enviroment not be created, begin creating ..."
-        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp-hh"
+        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
     print_title "check virtual python, pip"
-    if [ ! -f  "/home/.pyenvs/GpsDisp-hh/bin/python" ] || [ ! -f  "/home/.pyenvs/GpsDisp-hh/bin/pip" ]; then
+    if [ ! -f  "/home/.pyenvs/GpsDisp/bin/python" ] || [ ! -f  "/home/.pyenvs/GpsDisp/bin/pip" ]; then
         print_tip "python virtual enviroment created fail, retry..."
-        exec_cmd "sudo rm -rf /home/.pyenvs/GpsDisp-hh"
-        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp-hh"
+        exec_cmd "sudo rm -rf /home/.pyenvs/GpsDisp"
+        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
 }
 
 # check project python packages dependences
 function check_python_dependences(){
     print_title "check project dependences"
-    sudo sh -c "/home/.pyenvs/GpsDisp-hh/bin/pip freeze > /tmp/res.tmp"
+    sudo sh -c "/home/.pyenvs/GpsDisp/bin/pip freeze > /tmp/res.tmp"
     while read line1
     do
         tmp_flag=-1
@@ -147,22 +147,22 @@ function check_python_dependences(){
         done < /tmp/res.tmp
         if [[ $tmp_flag -ne 0 ]]; then
             print_tip "not istalled "$line1
-            exec_cmd "sudo /home/.pyenvs/GpsDisp-hh/bin/pip install $line1"
+            exec_cmd "sudo /home/.pyenvs/GpsDisp/bin/pip install $line1"
         fi
-    done < /home/GpsDisp-hh/requestments.txt
+    done < /home/GpsDisp/requestments.txt
 }
 
 function check_settings_config(){
     print_title "check django settings.py"
-    cd /home/GpsDisp-hh/GpsDisp-hh/
-    if [ `grep -c "DEBUG = False" /home/GpsDisp-hh/GpsDisp-hh/settings.py` -eq '0' ]; then
+    cd /home/GpsDisp/GpsDisp/
+    if [ `grep -c "DEBUG = False" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py DEBUG not False"
         find -name 'settings.py' | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
         print_tip "django settings.py DEBUG assign False success"
     fi
-    if [ `grep -c "STATIC_URL = '/GpsDisp-hh/static/'" /home/GpsDisp-hh/GpsDisp-hh/settings.py` -eq '0' ]; then
+    if [ `grep -c "STATIC_URL = '/GpsDisp/static/'" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py static url not right"
-        find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp-hh/static/'|g"
+        find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
         print_tip "django settings.py static url update success"
     fi
 }
@@ -182,7 +182,7 @@ function check_port_opened(){
 
 function test_web(){
     print_title "test web page"
-    wget --spider -nv "$(curl -s http://ident.me/)"":7788/"
+    wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
 }
 
 function exec_cmd(){

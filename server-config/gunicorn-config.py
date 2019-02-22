@@ -5,10 +5,10 @@ import os
 from multiprocessing import cpu_count
 
 bind = "127.0.0.1:9090"   #配置nginx时，需要将此地址写入nginx配置文件中
-proc_name = 'GpsDisp-hh'   #进程名
+proc_name = 'GpsDisp'   #进程名
 worker_class = "sync" # 使用gevent模式，还可以使用sync 模式，默认的是sync模式
-errorlog = '/var/log/GpsDisp-hh/gunicorn.error.log'  #错误日志文件，不会自动创建需要脚本创建
-accesslog = "/var/log/GpsDisp-hh/gunicorn.access.log"      #访问日志文件
+errorlog = '/var/log/GpsDisp/gunicorn.error.log'  #错误日志文件，不会自动创建需要脚本创建
+accesslog = "/var/log/GpsDisp/gunicorn.access.log"      #访问日志文件
 
 
 daemon = False  #守护进程：如果使用 supervisor 就不要开启，否则会冲突

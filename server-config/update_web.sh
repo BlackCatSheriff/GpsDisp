@@ -1,16 +1,16 @@
 #!/bin/sh 
 echo "==== BACK SOURCE ===="
-sudo tar -zcvf  /home/backup/src/GpsDisp-hh/"$(date +%Y-%m-%d-%H-%M-%S)".tar.gz --exclude=/home/GpsDisp-hh/.git --exclude=/home/GpsDisp-hh/.idea /home/GpsDisp-hh/
+sudo tar -zcvf  /home/backup/src/GpsDisp/"$(date +%Y-%m-%d-%H-%M-%S)".tar.gz --exclude=/home/GpsDisp/.git --exclude=/home/GpsDisp/.idea /home/GpsDisp/
 
 echo "==== FORCE PULL SOURCE ===="
-cd /home/GpsDisp-hh/GpsDisp-hh
+cd /home/GpsDisp/GpsDisp
 git fetch --all
 git reset --hard origin/master
 git pull
 
 find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
-# update seetting.py 's STATIC_URL = '/GpsDisp-hh/static/' same with nginx.conf
-find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp-hh/static/'|g"
+# update seetting.py 's STATIC_URL = '/GpsDisp/static/' same with nginx.conf
+find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
 
 echo "=== RELOAD SERVICES ==="
 sudo service nginx reload
@@ -20,4 +20,4 @@ sudo service nginx status
 sudo service supervisor status
 
 echo "=== TEST WEB ==="
-wget --spider -nv "$(curl -s http://ident.me/)"":7788/"
+wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
