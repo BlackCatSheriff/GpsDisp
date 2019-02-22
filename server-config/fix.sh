@@ -58,9 +58,9 @@ function check_dirs(){
 
 function check_permissions(){
     print_title "check directory onwer"
-    for dir in ${dubuntu_permissions_dirsirs[@]}
+    for dir in ${ubuntu_permissions_dirs[@]}
     do
-        if [ ! -O  "$dir" ]; then
+        if [ -O  "$dir" ]; then
             chown_fail_dirs+=("$dir")
         fi
     done 
@@ -150,7 +150,7 @@ function check_python_dependences(){
 }
 
 function check_settings_config(){
-    print_title "check django settings.py DEBUG"
+    print_title "check django settings.py"
     cd /home/GpsDisp/GpsDisp/
     if [ `grep -c "DEBUG = False" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py DEBUG not False"
