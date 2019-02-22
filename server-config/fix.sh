@@ -79,7 +79,7 @@ function check_config_symbolic_link(){
             ln_s_fail_files+=("$dir")
         fi
     done
-    if [[ ${#config_link_files[@]} -ne 0 ]]; then
+    if [[ ${#ln_s_fail_files[@]} -ne 0 ]]; then
         print_tip "have some sysbolic link not be built"
         sudo ln -s "/home/GpsDisp/server-config/nginx.conf" /etc/nginx/conf.d/nginx-GpsDisp.conf
         sudo ln -s "/home/GpsDisp/server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-GpsDisp.conf
@@ -120,8 +120,9 @@ function check_virtualenv(){
         exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
     print_title "check virtual python, pip"
-    if [ -f  "/home/.pyenvs/GpsDisp/bin/python" ] || [ -f  "/home/.pyenvs/GpsDisp/bin/pip" ]; then
-        print_tip "python virtual enviroment created fail, begin again creating..."
+    if [ ! -f  "/home/.pyenvs/GpsDisp/bin/python" ] || [ ! -f  "/home/.pyenvs/GpsDisp/bin/pip" ]; then
+        echo "==================== !!!!!!!!!!!!!!!!! ========================"
+        print_tip "python virtual enviroment created fail, retry..."
         exec_cmd "sudo rm -rf /home/.pyenvs/GpsDisp"
         exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
@@ -142,7 +143,7 @@ function check_python_dependences(){
             fi
         done < /tmp/res.tmp
         if [[ $tmp_flag -ne 0 ]]; then
-            print_tip "unistalled "$line1
+            print_tip "not istalled "$line1
             exec_cmd "sudo /home/.pyenvs/GpsDisp/bin/pip install $line1"
         fi
     done < /home/GpsDisp/requestments.txt
@@ -180,7 +181,7 @@ function print_title(){
 }
 
 function print_tip(){
-    echo -e "\033[40;32m"$1"\033[0m" 
+    echo -e "\033[40;31m"$1"\033[0m" 
 }
 
 # begin
