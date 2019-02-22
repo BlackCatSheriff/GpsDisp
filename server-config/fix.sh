@@ -159,7 +159,7 @@ function check_settings_config(){
     if [ `grep -c "DEBUG = False" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py DEBUG not False"
         find -name 'settings.py' | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
-        print_tip "django settings.py DEBUG assign False"
+        print_tip "django settings.py DEBUG assign False success"
     fi
     if [ `grep -c "STATIC_URL = '/GpsDisp/static/'" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py static url not right"
@@ -178,7 +178,7 @@ function check_port_opened(){
     print_title "check port"
     sudo lsof -i | grep -E "7777|8999"
     sudo netstat -ap | grep -E "7777|8999"
-    print_tip "if result not contain <7777> <8999>,so detail in deploy_help.md"
+    print_tip "if result not contain <7777> <8999>, so detail in deploy_help.md"
 }
 
 function test_web(){
