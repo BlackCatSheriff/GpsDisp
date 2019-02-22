@@ -168,6 +168,12 @@ function check_settings_config(){
     fi
 }
 
+function retart_services(){
+    print_title "restart service"
+    exec_cmd "sudo service nginx reload"
+    exec_cmd "sudo service supervisor restart"
+}
+
 function check_port_opened(){
     print_title "check port"
     sudo lsof -i | grep -E "7777|8999"
@@ -199,5 +205,6 @@ check_python_mirror
 check_virtualenv
 check_python_dependences
 check_settings_config
+retart_services
 check_port_opened
 # end
