@@ -178,7 +178,12 @@ function check_port_opened(){
     print_title "check port"
     sudo lsof -i | grep -E "7777|8999"
     sudo netstat -ap | grep -E "7777|8999"
-    print_tip "detail in  deploy_help.md"
+    print_tip "if result not contain <7777> <8999>,so detail in deploy_help.md"
+}
+
+function test_web(){
+    print_title "test web page"
+    wget --spider -nv "$(curl -s http://ident.me/)"":7777/"
 }
 
 function exec_cmd(){
@@ -207,4 +212,5 @@ check_python_dependences
 check_settings_config
 retart_services
 check_port_opened
+test_web
 # end
