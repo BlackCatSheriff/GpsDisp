@@ -4,9 +4,9 @@ sudo tar -zcvf  /home/backup/src/GpsDisp/"$(date +%Y-%m-%d-%H-%M-%S)".tar.gz --e
 
 echo "==== FORCE PULL SOURCE ===="
 cd /home/GpsDisp/GpsDisp
-git fetch --all
-git reset --hard origin/master
-git pull
+sudo git fetch --all
+sudo git reset --hard origin/master
+sudo git pull
 
 find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 # update seetting.py 's STATIC_URL = '/GpsDisp/static/' same with nginx.conf
