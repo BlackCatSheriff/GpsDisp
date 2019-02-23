@@ -39,10 +39,10 @@ sudo /home/.pyenvs/$WEB_NAME/bin/pip install -r $WEB_BASE_DIR"requestments.txt"
 
 # check setting debug
 cd $WEB_BASE_DIR$WEB_NAME
-sudo find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
+sudo find -name settings.py | sudo xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 # update seetting.py 's STATIC_URL = '/$WEB_NAME/static/' same with nginx.conf
 T_PATTERN="s|STATIC_URL = '/static/'|STATIC_URL = '/"$WEB_NAME"/static/'|g"
-sudo find -name settings.py | xargs perl -pi -e "$T_PATTERN"
+sudo find -name settings.py | sudo xargs perl -pi -e "$T_PATTERN"
 
 # open nginx, supervisor
 sudo service supervisor restart

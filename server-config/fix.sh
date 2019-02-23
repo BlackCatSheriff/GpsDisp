@@ -159,12 +159,12 @@ function check_settings_config(){
     cd /home/GpsDisp/GpsDisp/
     if [ `grep -c "DEBUG = False" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py DEBUG not False"
-        sudo find -name 'settings.py' | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
+        sudo find -name 'settings.py' | sudo xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
         print_tip "django settings.py DEBUG assign False success"
     fi
     if [ `grep -c "STATIC_URL = '/GpsDisp/static/'" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py static url not right"
-        sudo find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
+        sudo find -name settings.py | sudo xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
         print_tip "django settings.py static url update success"
     fi
 }
