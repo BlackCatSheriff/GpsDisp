@@ -159,12 +159,12 @@ function check_settings_config(){
     cd /home/GpsDisp/GpsDisp/
     if [ `grep -c "DEBUG = False" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py DEBUG not False"
-        find -name 'settings.py' | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
+        sudo find -name 'settings.py' | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
         print_tip "django settings.py DEBUG assign False success"
     fi
     if [ `grep -c "STATIC_URL = '/GpsDisp/static/'" /home/GpsDisp/GpsDisp/settings.py` -eq '0' ]; then
         print_tip "django settings.py static url not right"
-        find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
+        sudo find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
         print_tip "django settings.py static url update success"
     fi
 }
@@ -177,13 +177,15 @@ function retart_services(){
 
 function check_port_opened(){
     print_title "check port"
-    sudo lsof -i | grep -E "7788|9090"
-    sudo netstat -ap | grep -E "7788|9090"
-    print_tip "if result not contain <7788> <9090>, so detail in deploy_help.md"
+    sudo sh -c "lsof -i | grep -E -w '7788|9090' > /tmp/prot.tmp"
+    sudo lsof -i | grep -E -w '7788|9090'
+    if [ `grep -c "7788" /tmp/prot.tmp` -eq '0' ] || [ `grep -c "9090" /tmp/prot.tmp` -eq '0' ]; then
+        print_tip "detail solution in deploy_help.md"
+    fi 
 }
 
 function test_web(){
-    print_title "test web page"
+    print_title "open test page"
     wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
 }
 
@@ -203,7 +205,6 @@ function print_tip(){
 # begin
 check_apps
 check_dirs
-check_permissions
 check_config_symbolic_link
 check_update_web_sh
 check_nginx_default_config

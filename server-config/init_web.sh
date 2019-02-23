@@ -19,8 +19,6 @@ sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME /home/update_
 sudo cp $WEB_BASE_DIR"server-config/update_web.sh" /home/update_web_shs/update_$WEB_NAME.sh
 
 # update permission
-# sudo chown -R $USER.$USER $WEB_BASE_DIR
-# sudo chown -R $USER.$USER /var/log/$WEB_NAME/
 sudo chmod +x /home/update_web_shs/update_$WEB_NAME.sh
 
 # remove default nginx configuration
@@ -41,10 +39,10 @@ sudo /home/.pyenvs/$WEB_NAME/bin/pip install -r $WEB_BASE_DIR"requestments.txt"
 
 # check setting debug
 cd $WEB_BASE_DIR$WEB_NAME
-find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
+sudo find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 # update seetting.py 's STATIC_URL = '/$WEB_NAME/static/' same with nginx.conf
 T_PATTERN="s|STATIC_URL = '/static/'|STATIC_URL = '/"$WEB_NAME"/static/'|g"
-find -name settings.py | xargs perl -pi -e "$T_PATTERN"
+sudo find -name settings.py | xargs perl -pi -e "$T_PATTERN"
 
 # open nginx, supervisor
 sudo service supervisor restart

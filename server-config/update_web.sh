@@ -8,9 +8,9 @@ sudo git fetch --all
 sudo git reset --hard origin/master
 sudo git pull
 
-find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
+sudo find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 # update seetting.py 's STATIC_URL = '/GpsDisp/static/' same with nginx.conf
-find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
+sudo find -name settings.py | xargs perl -pi -e "s|STATIC_URL = '/static/'|STATIC_URL = '/GpsDisp/static/'|g"
 
 echo "=== RELOAD SERVICES ==="
 sudo service nginx reload
@@ -19,5 +19,5 @@ sudo service supervisor restart
 sudo service nginx status
 sudo service supervisor status
 
-echo "=== TEST WEB ==="
+echo "=== OPEN TEST PAGE ==="
 wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
