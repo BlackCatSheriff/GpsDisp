@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 WEB_NAME="GpsDisp"
 WEB_BASE_DIR=/home/$WEB_NAME/
 
