@@ -10,13 +10,13 @@ sudo apt-get update
 sudo apt-get -y install python-pip python-virtualenv python-dev nginx supervisor
 
 # create log, pip download configuration, python virtual env directory
-sudo mkdir /var/log/$WEB_NAME ~/.pip /home/.pyenvs/ 
+sudo mkdir /var/log/$WEB_NAME /home/$USER/.pip /home/.pyenvs 
 
 # create backup, update scripts directory
 sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME /home/update_web_shs
 
 # move update script
-sudo mv $WEB_BASE_DIR"server-config/update_web.sh" /home/update_web_shs/update_$WEB_NAME.sh
+sudo cp $WEB_BASE_DIR"server-config/update_web.sh" /home/update_web_shs/update_$WEB_NAME.sh
 
 # update permission
 sudo chown -R $USER.$USER $WEB_BASE_DIR
@@ -31,7 +31,7 @@ sudo ln -s $WEB_BASE_DIR"server-config/nginx.conf" /etc/nginx/conf.d/nginx-$WEB_
 sudo ln -s $WEB_BASE_DIR"server-config/supervisor.conf" /etc/supervisor/conf.d/supervisor-$WEB_NAME.conf
 
 # update python image url
-sudo echo -e "[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple/" | sudo tee ~/.pip/pip.conf
+sudo echo -e "[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple/" | sudo tee /home/$USER/.pip/pip.conf
 
 # build python virtual env
 sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/$WEB_NAME
@@ -51,9 +51,9 @@ sudo service supervisor restart
 sudo service nginx restart
 
 # open firewall port
-sudo iptables -I INPUT -p tcp --dport 7777 -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 7788 -j ACCEPT
 sudo iptables-save
 
 # test
 echo "======================= TEST ======================="
-wget --spider -nv "$(curl -s http://ident.me/)"":7777/"
+wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"

@@ -57,12 +57,14 @@ function check_dirs(){
 }
 
 function check_permissions(){
-    print_title "check directory onwer"
+    print_title "check permission"
     for dir in ${ubuntu_permissions_dirs[@]}
     do
         for f in $dir/*; 
-        do  
-            exec_cmd "sudo chown $USER.$USER $dir${f##*/}"
+        do 
+            if [ ! -O "$dir${f##*/}" ]; then
+                exec_cmd "sudo chown $USER.$USER $dir${f##*/}" 
+            fi 
         done  
         if [ ! -O  "$dir" ]; then
             chown_fail_dirs+=("$dir")

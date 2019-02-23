@@ -46,14 +46,14 @@ find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 T_PATTERN="s|STATIC_URL = '/static/'|STATIC_URL = '/"$WEB_NAME"/static/'|g"
 find -name settings.py | xargs perl -pi -e "$T_PATTERN"
 
-# open nginx, supervisor
-sudo service supervisor restart
-sudo service nginx restart
+# # open nginx, supervisor
+# sudo service supervisor restart
+# sudo service nginx restart
 
-# open firewall port
-sudo iptables -I INPUT -p tcp --dport 7788 -j ACCEPT
-sudo iptables-save
+# # open firewall port
+# sudo iptables -I INPUT -p tcp --dport 7788 -j ACCEPT
+# sudo iptables-save
 
-# test
-echo "======================= TEST ======================="
-wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
+# # test
+# echo "======================= TEST ======================="
+# wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
