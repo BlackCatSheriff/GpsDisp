@@ -177,16 +177,16 @@ function retart_services(){
 
 function check_port_opened(){
     print_title "check port"
-    sudo sh -c "lsof -i | grep -E -w '9998|9090' > /tmp/prot.tmp"
-    sudo lsof -i | grep -E -w '9998|9090'
-    if [ `grep -c "9998" /tmp/prot.tmp` -eq '0' ] || [ `grep -c "9090" /tmp/prot.tmp` -eq '0' ]; then
+    sudo sh -c "lsof -i | grep -E -w '7788|9090' > /tmp/prot.tmp"
+    sudo lsof -i | grep -E -w '7788|9090'
+    if [ `grep -c "7788" /tmp/prot.tmp` -eq '0' ] || [ `grep -c "9090" /tmp/prot.tmp` -eq '0' ]; then
         print_tip "detail solution in deploy_help.md"
     fi 
 }
 
 function test_web(){
     print_title "open test page"
-    wget --spider -nv "$(curl -s http://ident.me/)"":9998/index/"
+    wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
 }
 
 function exec_cmd(){

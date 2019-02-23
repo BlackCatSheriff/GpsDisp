@@ -49,9 +49,9 @@ sudo service supervisor restart
 sudo service nginx restart
 
 # open firewall port
-sudo iptables -I INPUT -p tcp --dport 7788 -j ACCEPT
+sudo iptables -I INPUT -p tcp --dport 9998 -j ACCEPT
 sudo iptables-save
 
 # test
-echo "======================= TEST ======================="
-wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
+echo "======================= OPEN TEST PAGE ======================="
+wget --spider -nv "$(curl -s http://ident.me/)"":9998/index/"

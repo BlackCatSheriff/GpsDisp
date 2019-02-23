@@ -20,4 +20,4 @@ sudo service nginx status
 sudo service supervisor status
 
 echo "=== OPEN TEST PAGE ==="
-wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
+wget --spider -nv "$(curl -s http://ident.me/)"":9998/index/"
