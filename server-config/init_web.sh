@@ -19,8 +19,8 @@ sudo mkdir -p /home/backup/src/$WEB_NAME /home/backup/db/$WEB_NAME /home/update_
 sudo cp $WEB_BASE_DIR"server-config/update_web.sh" /home/update_web_shs/update_$WEB_NAME.sh
 
 # update permission
-sudo chown -R $USER.$USER $WEB_BASE_DIR
-sudo chown -R $USER.$USER /var/log/$WEB_NAME/
+# sudo chown -R $USER.$USER $WEB_BASE_DIR
+# sudo chown -R $USER.$USER /var/log/$WEB_NAME/
 sudo chmod +x /home/update_web_shs/update_$WEB_NAME.sh
 
 # remove default nginx configuration
@@ -46,14 +46,14 @@ find -name settings.py | xargs perl -pi -e 's|DEBUG = True|DEBUG = False|g'
 T_PATTERN="s|STATIC_URL = '/static/'|STATIC_URL = '/"$WEB_NAME"/static/'|g"
 find -name settings.py | xargs perl -pi -e "$T_PATTERN"
 
-# # open nginx, supervisor
-# sudo service supervisor restart
-# sudo service nginx restart
+# open nginx, supervisor
+sudo service supervisor restart
+sudo service nginx restart
 
-# # open firewall port
-# sudo iptables -I INPUT -p tcp --dport 7788 -j ACCEPT
-# sudo iptables-save
+# open firewall port
+sudo iptables -I INPUT -p tcp --dport 7788 -j ACCEPT
+sudo iptables-save
 
-# # test
-# echo "======================= TEST ======================="
-# wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
+# test
+echo "======================= TEST ======================="
+wget --spider -nv "$(curl -s http://ident.me/)"":7788/index/"
