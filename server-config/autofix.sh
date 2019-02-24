@@ -123,13 +123,13 @@ function check_virtualenv(){
     print_title "check virtualenv directory"
     if [ ! -d  "/home/.pyenvs/GpsDisp" ]; then
         print_tip "python virtual enviroment not be created, begin creating ..."
-        exec_cmd "source /home/GpsDisp/server-config/linux_install_python.sh"
+        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
     print_title "check virtual python, pip"
     if [ ! -f  "/home/.pyenvs/GpsDisp/bin/python" ] || [ ! -f  "/home/.pyenvs/GpsDisp/bin/pip" ]; then
         print_tip "python virtual enviroment created fail, retry..."
         exec_cmd "sudo rm -rf /home/.pyenvs/GpsDisp"
-        exec_cmd "source /home/GpsDisp/server-config/linux_install_python.sh"
+        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
 }
 
