@@ -5,9 +5,11 @@ sudo mkdir /etc/python3.7.2
 
 sudo wget -P /home/$USER https://www.python.org/ftp/python/3.7.2/Python-3.7.2.tgz 
 
-sudo tar zxvf  /home/$USER/Python-3.7.2.tgz -C  /home/$USER 
+sudo tar zxvf  /home/$USER/Python-3.7.2.tgz -C  /home/$USER
 sudo rm /home/$USER/Python-3.7.2.tgz
-sudo /home/$USER/Python-3.7.2/configure --enable-optimizations --prefix=/etc/python3.7.2 
+
+cd /home/$USER/Python-3.7.2
+sudo ./configure --enable-optimizations --prefix=/etc/python3.7.2
 
 sudo make 
 sudo make install
