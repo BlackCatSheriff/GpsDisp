@@ -1,5 +1,9 @@
 from django.contrib import admin
-from webapp.models import Device, Manager, Anchor, Record,RowUpload
+
+from webapp.models import Device, Manager, Anchor, Record, RowUpload
+
+admin.site.site_header = "人员智能定位管理平台"
+admin.site.site_title = "平台"
 
 # Register your models here.
 
@@ -24,7 +28,8 @@ class ManagerAdmin(admin.ModelAdmin):
 class ManagerAdmin(admin.ModelAdmin):
     list_display = ['a_name', 'a_id', 'a_gps_jd', 'a_gps_wd']
 
+
 @admin.register(RowUpload)
 class RowUploadAdmin(admin.ModelAdmin):
-    list_filter = ['successful','device_id']
-    list_display =['device_id','successful','remark']
+    list_filter = ['successful', 'device_id']
+    list_display = ['device_id', 'successful', 'update_time', 'remark']

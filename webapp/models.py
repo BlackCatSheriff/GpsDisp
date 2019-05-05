@@ -54,7 +54,7 @@ class Anchor(models.Model):
 
 
 class Record(models.Model):
-    r_device_id = models.ForeignKey(Device, verbose_name='设备', on_delete=models.CASCADE)
+    r_device_id = models.ForeignKey(Device, verbose_name='设备编号', on_delete=models.CASCADE)
     a_gps_jd = models.CharField('经度', max_length=64)
     a_gps_wd = models.CharField('纬度', max_length=64)
     a_update_time = models.DateTimeField('录入时间', auto_now_add=True)
@@ -68,14 +68,14 @@ class Record(models.Model):
 
 
 class RowUpload(models.Model):
-    device_id = models.ForeignKey(Device, verbose_name='设备', null=True, blank=True, on_delete=models.SET_NULL)
+    device_id = models.CharField(verbose_name='设备ID', default='', max_length=128)
     update_time = models.DateTimeField('上传时间', auto_now_add=True)
     content = models.TextField('上传内容', default='')
-    successful = models.BooleanField('是否合法', default=False)
+    successful = models.BooleanField('合法', default=False)
     remark = models.CharField('备注', max_length=256, default='')
 
     def __str__(self):
-        return self.device_id.d_number
+        return self.device_id
 
     class Meta:
         verbose_name = '上传原始记录'

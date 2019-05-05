@@ -1,14 +1,13 @@
 import json
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 from webapp import socket
 from webapp.models import Device, Manager, Anchor, Record, RowUpload
-
-import time
 
 """
 按照
@@ -212,22 +211,26 @@ def jump_login(requests):
 def save_device_data(requests):
     code = "-1"
     rowUploadRecord = RowUpload()
+    rowUploadRecord.device_id = "非法请求"
     if requests.method == 'POST':
         try:
+            rowUploadRecord.device_id = "设备ID出错"
+            post_data=json.loads(requests.body)
+            d = Device.objects.get(d_number=post_data.get('device_id'))
+            rowUploadRecord.device_id = d.d_number
+            rowUploadRecord.content = str(post_data)
             r = Record()
-            d = Device.objects.get(d_number=requests.POST.get('device_id'))
             r.r_device_id = d
-            rowUploadRecord.device_id = d
-            rowUploadRecord.content = json.dumps(requests.POST)
-            if requests.POST.get('method') == "1":
-                anchor_id = requests.POST.get('anchor_id')
-                datapack = json.loads(requests.POST.get('data'))
+
+            if post_data.get('method') == "1":
+                anchor_id = post_data.get('anchor_id')
+                datapack =post_data.get('data')
                 tmp_jd, tmp_wd = socket.calc_gps(anchor_id, d.d_number, datapack)
                 r.a_gps_jd = tmp_jd
                 r.a_gps_wd = tmp_wd
             else:
-                r.a_gps_jd = requests.POST.get('gps_jd')
-                r.a_gps_wd = requests.POST.get('gps_wd')
+                r.a_gps_jd = post_data.get('gps_jd')
+                r.a_gps_wd = post_data.get('gps_wd')
             r.save()
             rowUploadRecord.successful = True
             code = "0"
