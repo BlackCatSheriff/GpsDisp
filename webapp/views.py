@@ -234,10 +234,8 @@ def save_device_data(requests):
             r.save()
             rowUploadRecord.successful = True
             code = "0"
-        except RuntimeError as e:
+        except Exception as e:
             rowUploadRecord.remark = e.__str__()
-        except:
-            rowUploadRecord.remark = '设备ID出错'
         finally:
             rowUploadRecord.save()
             return HttpResponse(code)
