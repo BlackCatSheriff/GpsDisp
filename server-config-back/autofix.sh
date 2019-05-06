@@ -123,13 +123,13 @@ function check_virtualenv(){
     print_title "check virtualenv directory"
     if [ ! -d  "/home/.pyenvs/GpsDisp" ]; then
         print_tip "python virtual enviroment not be created, begin creating ..."
-        exec_cmd "source /home/GpsDisp/server-config/linux_install_python.sh"
+        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
     print_title "check virtual python, pip"
     if [ ! -f  "/home/.pyenvs/GpsDisp/bin/python" ] || [ ! -f  "/home/.pyenvs/GpsDisp/bin/pip" ]; then
         print_tip "python virtual enviroment created fail, retry..."
         exec_cmd "sudo rm -rf /home/.pyenvs/GpsDisp"
-        exec_cmd "source /home/GpsDisp/server-config/linux_install_python.sh"
+        exec_cmd "sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp"
     fi
 }
 
@@ -177,16 +177,16 @@ function retart_services(){
 
 function check_port_opened(){
     print_title "check port"
-    sudo sh -c "lsof -i | grep -E -w '9998|8080' > /tmp/prot.tmp"
-    sudo lsof -i | grep -E -w '9998|8080'
-    if [ `grep -c "9998" /tmp/prot.tmp` -eq '0' ] || [ `grep -c "8080" /tmp/prot.tmp` -eq '0' ]; then
+    sudo sh -c "lsof -i | grep -E -w '9998|9090' > /tmp/prot.tmp"
+    sudo lsof -i | grep -E -w '9998|9090'
+    if [ `grep -c "9998" /tmp/prot.tmp` -eq '0' ] || [ `grep -c "9090" /tmp/prot.tmp` -eq '0' ]; then
         print_tip "detail solution in deploy_help.md"
     fi 
 }
 
 function test_web(){
     print_title "open test page"
-    wget --spider -nv "$(curl -s http://ident.me/)"":9998/index"
+    wget --spider -nv "$(curl -s http://ident.me/)"":9998/index/"
 }
 
 function exec_cmd(){

@@ -216,9 +216,9 @@ def save_device_data(requests):
         try:
             rowUploadRecord.device_id = "设备ID出错"
             post_data=json.loads(requests.body)
+            rowUploadRecord.content = str(post_data)
             d = Device.objects.get(d_number=post_data.get('device_id'))
             rowUploadRecord.device_id = d.d_number
-            rowUploadRecord.content = str(post_data)
             r = Record()
             r.r_device_id = d
 
