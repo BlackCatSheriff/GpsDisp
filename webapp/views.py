@@ -188,12 +188,12 @@ def save_device_data(requests):
     code = "-1"
     rowUploadRecord = RowUpload()
     rowUploadRecord.device_id = "非法请求"
+    rowUploadRecord.ip_address = utils.get_client_ip(requests)
     if requests.method == 'POST':
         try:
             rowUploadRecord.device_id = "load json error"
             post_data = json.loads(requests.body)
             rowUploadRecord.content = str(post_data)
-            rowUploadRecord.ip_address = utils.get_client_ip(requests)
             d = Device.objects.get(d_number=post_data.get('device_id'))
             rowUploadRecord.device_id = d.d_number
             r = Record()
