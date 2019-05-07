@@ -4,9 +4,9 @@ from logging.handlers import WatchedFileHandler
 import os
 from multiprocessing import cpu_count
 
-bind = "127.0.0.1:8080"   #配置nginx时，需要将此地址写入nginx配置文件中
+bind = "127.0.0.1:9090"   #配置nginx时，需要将此地址写入nginx配置文件中
 proc_name = 'GpsDisp'   #进程名
-worker_class = "gevent" # 使用gevent模式，还可以使用sync 模式，默认的是sync模式
+worker_class = "sync" # 使用gevent模式，还可以使用sync 模式，默认的是sync模式
 errorlog = '/var/log/GpsDisp/gunicorn.error.log'  #错误日志文件，不会自动创建需要脚本创建
 accesslog = "/var/log/GpsDisp/gunicorn.access.log"      #访问日志文件
 
@@ -24,5 +24,5 @@ graceful_timeout = 30
 worker_connections = 65535
 
 
-loglevel = 'info' #日志级别，这个日志级别指的是错误日志的级别，而访问日志的级别无法设置
+loglevel = 'debug' #日志级别，这个日志级别指的是错误日志的级别，而访问日志的级别无法设置
 access_log_format = '%(t)s %(h)s "%(r)s" %(s)s %(L)s %(b)s "'

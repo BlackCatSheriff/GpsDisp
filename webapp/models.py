@@ -73,6 +73,7 @@ class RowUpload(models.Model):
     content = models.TextField('上传内容', default='')
     successful = models.BooleanField('合法', default=False)
     remark = models.CharField('备注', max_length=256, default='')
+    ip_address = models.CharField('IP', max_length=16, default='0.0.0.0')
 
     def __str__(self):
         return self.device_id

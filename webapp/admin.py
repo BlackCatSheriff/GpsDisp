@@ -32,4 +32,4 @@ class ManagerAdmin(admin.ModelAdmin):
 @admin.register(RowUpload)
 class RowUploadAdmin(admin.ModelAdmin):
     list_filter = ['successful', 'device_id']
-    list_display = ['device_id', 'successful', 'update_time', 'remark']
+    list_display = ['device_id', 'successful', 'update_time', 'remark','ip_address']

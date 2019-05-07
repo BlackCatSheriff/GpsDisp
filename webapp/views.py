@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from webapp import socket
+from webapp import utils
 from webapp.models import Device, Manager, Anchor, Record, RowUpload
 
 """
@@ -182,31 +183,6 @@ def jump_login(requests):
     return render(requests, 'login.html')
 
 
-# @csrf_exempt
-# def save_device_data(requests):
-#     code = "-1"
-#     if requests.method == 'POST':
-#         try:
-#             r = Record()
-#             d = Device.objects.get(d_number=requests.POST.get('device_id'))
-#             r.r_device_id = d
-#             if requests.POST.get('method') == "1":
-#                 anchor_id = requests.POST.get('anchor_id')
-#                 tmp_jd, tmp_wd = socket.calc_gps(anchor_id, requests.POST.get('gps_jd'), requests.POST.get('gps_wd'))
-#                 r.a_gps_jd = tmp_jd
-#                 r.a_gps_wd = tmp_wd
-#             else:
-#                 r.a_gps_jd = requests.POST.get('gps_jd')
-#                 r.a_gps_wd = requests.POST.get('gps_wd')
-#             r.save()
-#             code = "0"
-#         finally:
-#             return HttpResponse(code)
-#     else:
-#         return HttpResponse(code)
-
-
-
 @csrf_exempt
 def save_device_data(requests):
     code = "-1"
@@ -214,9 +190,10 @@ def save_device_data(requests):
     rowUploadRecord.device_id = "非法请求"
     if requests.method == 'POST':
         try:
-            rowUploadRecord.device_id = "设备ID出错"
-            post_data=json.loads(requests.body)
+            rowUploadRecord.device_id = "load json error"
+            post_data = json.loads(requests.body)
             rowUploadRecord.content = str(post_data)
+            rowUploadRecord.ip_address = utils.get_client_ip(requests)
             d = Device.objects.get(d_number=post_data.get('device_id'))
             rowUploadRecord.device_id = d.d_number
             r = Record()
@@ -224,7 +201,7 @@ def save_device_data(requests):
 
             if post_data.get('method') == "1":
                 anchor_id = post_data.get('anchor_id')
-                datapack =post_data.get('data')
+                datapack = post_data.get('data')
                 tmp_jd, tmp_wd = socket.calc_gps(anchor_id, d.d_number, datapack)
                 r.a_gps_jd = tmp_jd
                 r.a_gps_wd = tmp_wd
@@ -240,6 +217,6 @@ def save_device_data(requests):
             rowUploadRecord.save()
             return HttpResponse(code)
     else:
-        rowUploadRecord.remark = '无效请求,不是POST，或者其他'
+        rowUploadRecord.remark = '无效请求,不是POST'
         rowUploadRecord.save()
         return HttpResponse(code)

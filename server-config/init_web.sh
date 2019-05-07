@@ -32,7 +32,7 @@ sudo ln -s $WEB_BASE_DIR"server-config/supervisor.conf" /etc/supervisor/conf.d/s
 sudo echo -e "[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple/" | sudo tee /home/$USER/.pip/pip.conf
 
 # build python virtual env
-source /home/GpsDisp/server-config/linux_install_python.sh
+sudo virtualenv -p python3 --no-site-packages --download /home/.pyenvs/GpsDisp
 
 # install 3-rd libs
 sudo /home/.pyenvs/$WEB_NAME/bin/pip install -r $WEB_BASE_DIR"requestments.txt"
@@ -54,4 +54,4 @@ sudo iptables-save
 
 # test
 echo "======================= OPEN TEST PAGE ======================="
-wget --spider -nv "$(curl -s http://ident.me/)"":9998/index"
+wget --spider -nv "$(curl -s http://ident.me/)"":9998/index/"

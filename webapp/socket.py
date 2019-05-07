@@ -1,6 +1,7 @@
 import datetime
 import os
 import subprocess
+import platform
 
 from webapp.models import Anchor, Record, Device
 
@@ -31,7 +32,7 @@ def calc_gps(anchor_id, device_id, datapack):
             raise RuntimeError('数据包信号数量不够')
         signals.append(datapack[i].get('signal_intensity'))
     jd, wd = call_c_program(anchor_id, device_id, signals)
-    if jd == 'NaN' or wd == 'NaN':
+    if jd.find('nan')!=-1 or wd.find('nan')!=-1:
         raise RuntimeError('计算结果为NaN_jd:{}_wd:{}'.format(jd, wd))
 
     return jd, wd
@@ -41,7 +42,12 @@ def call_c_program(anchor_id, device_id, signals):
     a = Anchor.objects.get(a_id=anchor_id)
     d = Device.objects.get(d_number=device_id)
     # r_jd,r_wd = call_c(jd,wd,s_1,s_2,s_3,s_4,x_len,y_len,angle,A,N)
-    sts = 'call_exe.exe {} {} {} {} {} {} {} {}'.format(
+    if platform.system()=="Windows":
+        pattern="call_exe.exe {} {} {} {} {} {} {} {}"
+    else:
+        pattern="call_bin {} {} {} {} {} {} {} {}"
+
+    sts = pattern.format(
         a.a_gps_jd, a.a_gps_wd,
         ' '.join(signals),
         a.a_x_length, a.a_y_length,
