@@ -33,7 +33,7 @@ def calc_gps(anchor_id, device_id, datapack):
         signals.append(datapack[i].get('signal_intensity'))
     jd, wd = call_c_program(anchor_id, device_id, signals)
     if jd.find('nan')!=-1 or wd.find('nan')!=-1:
-        raise RuntimeError('计算结果为NaN_jd:{}_wd:{}'.format(jd, wd))
+        raise ValueError('计算结果为NaN_jd:{}_wd:{}'.format(jd, wd))
 
     return jd, wd
 

@@ -211,6 +211,10 @@ def save_device_data(requests):
             r.save()
             rowUploadRecord.successful = True
             code = "0"
+        except ValueError as e:
+            rowUploadRecord.successful = True
+            rowUploadRecord.remark = e.__str__()
+            code = "0"
         except Exception as e:
             rowUploadRecord.remark = e.__str__()
         finally:
