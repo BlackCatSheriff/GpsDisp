@@ -64,8 +64,7 @@ function refresh(a, img, input) {
                 img.attr('src', STATIC_URL+img_url['on']);
                 var remark = "编号:"+input.attr('_n')+"<br>"+"经度:"+data['jd']+"<br>"+"维度:"+data['wd']+"<br>"+"最后更新时间:"+data['time'];
                 var point_bundle = [[data['jd'], data['wd'], remark]];
-                add_point_on_map(point_bundle);
-
+                transPositions(point_bundle);
             }
             else
                 img.attr('src', STATIC_URL+img_url['overtime']);
@@ -134,8 +133,31 @@ function edit_user(s_data) {
 }
 
 
-function add_point_on_map(data_info) {
+function transPositions(data_info) {
+    // 坐标转换
+    var points = [];
 
+    for(var i=0;i<data_info.length;i++){
+        points.push(new BMap.Point(data_info[i][0],data_info[i][1]))
+    }
+
+    //坐标转换完之后的回调函数
+    translateCallback = function (data){
+      if(data.status === 0) {
+        donepos=[]
+        for (var i = 0; i < data.points.length; i++) {
+              donepos.push(data.points[i]);
+        }
+        add_point_on_map(data_info,donepos);
+      }
+    };
+    setTimeout(function(){
+        var convertor = new BMap.Convertor();
+        convertor.translate(points, 1, 5, translateCallback)
+    }, 1000);
+}
+
+function add_point_on_map(data_info,transposs) {
 
     var opts = {
         width : 250,     // 信息窗口宽度
@@ -143,12 +165,14 @@ function add_point_on_map(data_info) {
         title : "设备信息" , // 信息窗口标题
         enableMessage:true//设置允许信息窗发送短息
     };
+
     for(var i=0;i<data_info.length;i++){
-        var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]));  // 创建标注
+        var marker = new BMap.Marker(transposs[i]);  // 创建标注
         var content = data_info[i][2];
         map.addOverlay(marker);               // 将标注添加到地图中
         addClickHandler(content,marker);
     }
+
     function addClickHandler(content,marker){
         marker.addEventListener("click",function(e){
             openInfo(content,e)}
@@ -163,7 +187,6 @@ function add_point_on_map(data_info) {
 
     map.panTo(new BMap.Point(data_info[0][0],data_info[0][1]));
     // map.setZoom(15);
-
 }
 
 function remove_overlay(){
