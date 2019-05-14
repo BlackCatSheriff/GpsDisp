@@ -55,7 +55,8 @@ def call_c_program(anchor_id, device_id, signals):
         d.d_CONST_A, d.d_CONST_N
     )
 
-    cmd_stdout = subprocess.getoutput(os.path.join(os.path.dirname(os.path.abspath(__file__)), sts))
+    # cmd_stdout = subprocess.getoutput(os.path.join(os.path.dirname(os.path.abspath(__file__)), sts))
 
-    jd, wd = cmd_stdout.split(',')
-    return jd, wd
+    # jd, wd = cmd_stdout.split(',')
+    # return jd, wd
+    return a.a_gps_jd, a.a_gps_wd
