@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Line//ax+by=1 ÓÃÁ½¸ö²ÎÊı,¹ıÔ­µãÊ±c=0
+class Line//ax+by=1 ç”¨ä¸¤ä¸ªå‚æ•°,è¿‡åŸç‚¹æ—¶c=0
     {
 	public :double a ;
 	public :double b ;
@@ -15,7 +15,7 @@ class Point
     {
 	public :double Y ;
 	public :double X ;
-	public :double r ;//µ½Ö¸¶¨µãµÄ¾àÀë
+	public :double r ;//åˆ°æŒ‡å®šç‚¹çš„è·ç¦»
     };
 static Point call_c(double jd, double wd, double s_1, double s_2, double s_3, double s_4, double x_len, double y_len, double angle, double A, double N);
 static Point rotatePoint(Point p0, double angle, double jd, double wd);
@@ -30,7 +30,7 @@ static Point pointOut;
 int main(int argc, char*argv[])
 {
 	int a;
-	//cout<<"ÊäÈëËùÓĞ²ÎÊı"<<endl;
+	//cout<<"è¾“å…¥æ‰€æœ‰å‚æ•°"<<endl;
 	//cin>>value[0]>>value[1]>>value[2]>>value[3]>>value[4]>>value[5]>>value[6]>>value[7]>>value[8]>>value[9]>>value[10];
 	//cout<<argv[2]<<endl;
 	if(argc>=12)
@@ -47,15 +47,20 @@ int main(int argc, char*argv[])
 
 static Point call_c(double jd, double wd, double s_1, double s_2, double s_3, double s_4, double x_len, double y_len, double angle, double A, double N)
 {
-    //½«ĞÅºÅÇ¿¶È×ª»¯Îª¾àÀë¡¢±ê¶¨µã
-    /* ËÄµã¶¨Î»
+    //å°†ä¿¡å·å¼ºåº¦è½¬åŒ–ä¸ºè·ç¦»ã€æ ‡å®šç‚¹
+    /* å››ç‚¹å®šä½
      * s1(0,y)    x         s2(x,y)
      * 
      * y                    y
      * 
      * s3(0,0)    x         s4(x,0)
      */
-
+ /********/  	
+    y_len=y_len*0.000008983152841195214;
+	  x_len=x_len*0.000008983152841195214;
+	  x_len=x_len/cos(abs(wd));
+ /********/  	  		
+	
     Point p1 = distanceAndPoint(s_1, A, N, 0.0, y_len);
     Point p2 = distanceAndPoint(s_2, A, N, x_len, y_len);
     Point p3 = distanceAndPoint(s_3, A, N, 0.0, 0.0);
@@ -66,7 +71,7 @@ static Point call_c(double jd, double wd, double s_1, double s_2, double s_3, do
     Point p3 = new Point() { X = 0.0, Y = 0.0, r = s_3 };
     Point p4 = new Point() { X = x_len, Y = 0.0, r = s_4 };
     */
-    //ËÄµã¶¨Î»
+    //å››ç‚¹å®šä½
     Point p = getLocationByFour(p1, p2, p3, p4);
     p = rotatePoint(p, angle, jd, wd);
     return p;
@@ -79,14 +84,20 @@ static Point rotatePoint(Point p0, double angle, double jd, double wd)
     p.X = p0.X * cos(anglePI) + p0.Y * sin(anglePI) + jd;
     p.Y = p0.Y * cos(anglePI) - p0.X * sin(anglePI) + wd;
     p.r = p0.r;
+ /********/  
+    if(abs(p.X-jd)>2*abs(p.X))
+    p.X=jd;
+    if(abs(p.Y-wd)>2*abs(p.Y))		
+	  p.Y=wd;
+	/*******/
     return p;
 }
 
-static Point distanceAndPoint(double single, double A, double N, double x, double y)//½«ĞÅºÅÇ¿¶È×ª»¯Îª¾àÀë¡¢±ê¶¨µã
+static Point distanceAndPoint(double single, double A, double N, double x, double y)//å°†ä¿¡å·å¼ºåº¦è½¬åŒ–ä¸ºè·ç¦»ã€æ ‡å®šç‚¹
 {
     Point p;
     double lenth = 0;
-    lenth = A * exp(0 - single * N);//Ö¸ÊıË¥¼õ a*e^(-n*x)
+    lenth = A * exp(0 - single * N);//æŒ‡æ•°è¡°å‡ a*e^(-n*x)
     //lenth = A - 10 * N * Math.Log10(single);//A-10*n*lgr
     p.r = lenth;
     p.X = x;
@@ -94,7 +105,7 @@ static Point distanceAndPoint(double single, double A, double N, double x, doubl
     return p;
 }
 
-// ËÄµã¶¨Î»£¬¶à´ÎÈıµã¶¨Î»
+// å››ç‚¹å®šä½ï¼Œå¤šæ¬¡ä¸‰ç‚¹å®šä½
 static Point getLocationByFour(Point p1, Point p2, Point p3, Point p4)
 {
     Point p;
@@ -108,18 +119,18 @@ static Point getLocationByFour(Point p1, Point p2, Point p3, Point p4)
     return p;
 }
 
-//Èıµã¶¨Î»
+//ä¸‰ç‚¹å®šä½
 static Point getLocationByThree(Point p1, Point p2, Point p3)
 {
-    //ÒÀ´ÎÁ½Ô²¶¨Ïß£¬ÕÒµ½ÈıÌõÏß
+    //ä¾æ¬¡ä¸¤åœ†å®šçº¿ï¼Œæ‰¾åˆ°ä¸‰æ¡çº¿
     Line L12 = getLineByTwoCircle(p1, p2);
     Line L23 = getLineByTwoCircle(p2, p3);
     Line L31 = getLineByTwoCircle(p3, p1);
-    //Èı½ÇÏßÁ½Á½Çó½»µã  ÀíÏë×´Ì¬ÏÂÖ»ÓĞÒ»¸ö½»µã
+    //ä¸‰è§’çº¿ä¸¤ä¸¤æ±‚äº¤ç‚¹  ç†æƒ³çŠ¶æ€ä¸‹åªæœ‰ä¸€ä¸ªäº¤ç‚¹
     Point p13 = getPointByTwoLine(L12, L23);
     Point p21 = getPointByTwoLine(L23, L31);
     Point p32 = getPointByTwoLine(L31, L12);
-    //Èı¸ö½»µãÇóÆ½¾ù       ·ÀÖ¹³öÏÖÆ«²î
+    //ä¸‰ä¸ªäº¤ç‚¹æ±‚å¹³å‡       é˜²æ­¢å‡ºç°åå·®
     Point p;
     p.X = (p13.X + p32.X + p21.X) / 3;
     p.Y = (p13.Y + p32.Y + p21.Y) / 3;
@@ -127,7 +138,7 @@ static Point getLocationByThree(Point p1, Point p2, Point p3)
     return p;
 }
 
-//Á½ÏßÕÒµã
+//ä¸¤çº¿æ‰¾ç‚¹
 static Point getPointByTwoLine(Line L1, Line L2)
 {
     Point p ;
@@ -142,7 +153,7 @@ static Point getPointByTwoLine(Line L1, Line L2)
         p.X = (c1 * b2 - c2 * b1) / (a1 * b2 - a2 * b1);
         p.Y = (c1 * a2 - c2 * a1) / (b1 * a2 - b2 * a1);
     }
-    else//////Æ½ĞĞ£¨ÆäÊµÔÚ´Ë´¦²»»á·¢Éú£©
+    else//////å¹³è¡Œï¼ˆå…¶å®åœ¨æ­¤å¤„ä¸ä¼šå‘ç”Ÿï¼‰
     {
         if (a1 != 0)
         {
@@ -165,24 +176,24 @@ static Point getPointByTwoLine(Line L1, Line L2)
     return p;
 }
 
-//Á½Ô²¶¨Ïß
-static Line getLineByTwoCircle(Point p1, Point p2)//Á½Ô²½»µãÖĞĞÄ
+//ä¸¤åœ†å®šçº¿
+static Line getLineByTwoCircle(Point p1, Point p2)//ä¸¤åœ†äº¤ç‚¹ä¸­å¿ƒ
 {
     Line l ;
     Point p ;
-    double r1 = p1.r;//°ë¾¶
+    double r1 = p1.r;//åŠå¾„
     double r2 = p2.r;
     double bili = 0.5;
     double dd = pow(p1.X - p2.X, 2) + pow(p1.Y - p2.Y, 2);
-    double d = sqrt(dd);//Á½ÒÑÖªµã¼ä¾àÀë  >0
-    double xs = p2.X - p1.X;//Á½ÒÑÖªµã¼äX¾àÀë
-    double ys = p2.Y - p1.Y;//Á½ÒÑÖªµã¼äY¾àÀë
-    if (r1 + r2 > d)//Õı³££¬ÓĞ½»µã
+    double d = sqrt(dd);//ä¸¤å·²çŸ¥ç‚¹é—´è·ç¦»  >0
+    double xs = p2.X - p1.X;//ä¸¤å·²çŸ¥ç‚¹é—´Xè·ç¦»
+    double ys = p2.Y - p1.Y;//ä¸¤å·²çŸ¥ç‚¹é—´Yè·ç¦»
+    if (r1 + r2 > d)//æ­£å¸¸ï¼Œæœ‰äº¤ç‚¹
     {
         double rr1 = r1 * r1;
         double rr2 = r2 * r2;
-        double len = (rr1 - rr2 + dd) / 2 / d;  //Á½Ô²½»µãÖĞĞÄµ½µÚÒ»¸öµãµÄ¾àÀë
-        bili = len / d;//±ÈÀı
+        double len = (rr1 - rr2 + dd) / 2 / d;  //ä¸¤åœ†äº¤ç‚¹ä¸­å¿ƒåˆ°ç¬¬ä¸€ä¸ªç‚¹çš„è·ç¦»
+        bili = len / d;//æ¯”ä¾‹
         p.r = sqrt(rr1 - len * len);
     }
     else
@@ -191,7 +202,7 @@ static Line getLineByTwoCircle(Point p1, Point p2)//Á½Ô²½»µãÖĞĞÄ
     }
     p.X = bili * xs + p1.X;
     p.Y = bili * ys + p1.Y;
-    if (xs != 0)//ÄÜÓÃy=kx+b
+    if (xs != 0)//èƒ½ç”¨y=kx+b
     {
         double k = ys / xs;
         if ((p.X + k * p.Y) != 0)
@@ -202,14 +213,14 @@ static Line getLineByTwoCircle(Point p1, Point p2)//Á½Ô²½»µãÖĞĞÄ
             l.b = b;
             l.c = 1;
         }
-        else//¹ıÔ­µã
+        else//è¿‡åŸç‚¹
         {
             l.c = 0;
             l.a = 1;
             l.b = 1 * k;
         }
     }
-    else//  ÄÜÓÃx=y/k-b/k
+    else//  èƒ½ç”¨x=y/k-b/k
     {
         double k_ = xs / ys;//      1/k
         if ((k_ * p.X + p.Y) != 0)
@@ -220,7 +231,7 @@ static Line getLineByTwoCircle(Point p1, Point p2)//Á½Ô²½»µãÖĞĞÄ
             l.b = b;
             l.c = 1;
         }
-        else//¹ıÔ­µã
+        else//è¿‡åŸç‚¹
         {
             l.c = 0;
             l.b = 1;

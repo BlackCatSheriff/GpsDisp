@@ -185,7 +185,7 @@ function add_point_on_map(data_info,transposs) {
         map.openInfoWindow(infoWindow, point); //开启信息窗口
     }
 
-    map.panTo(new BMap.Point(data_info[0][0],data_info[0][1]));
+    map.panTo(transposs[0]);
     // map.setZoom(15);
 }
 

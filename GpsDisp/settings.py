@@ -137,3 +137,20 @@ if platform.system() != "Windows":
     print(bin_path)
     if os.path.exists(bin_path) is False:
         os.system("g++ {} -o {}".format(os.path.join(BASE_DIR, "webapp","Location.cpp"), bin_path))
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG' if DEBUG else 'INFO',
+        },
+    },
+}
