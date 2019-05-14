@@ -206,8 +206,8 @@ def save_device_data(requests):
                 r.a_gps_jd = tmp_jd
                 r.a_gps_wd = tmp_wd
             else:
-                r.a_gps_jd = post_data.get('gps_jd')
-                r.a_gps_wd = post_data.get('gps_wd')
+                r.a_gps_jd = post_data.get('gps_jd').replace(' ', '')
+                r.a_gps_wd = post_data.get('gps_wd').replace(' ', '')
             r.save()
             rowUploadRecord.successful = True
             code = "0"
