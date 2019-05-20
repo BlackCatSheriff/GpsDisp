@@ -1,7 +1,7 @@
 import datetime
 import os
-import subprocess
 import platform
+import subprocess
 
 from webapp.models import Anchor, Record, Device
 
@@ -32,7 +32,7 @@ def calc_gps(anchor_id, device_id, datapack):
             raise RuntimeError('数据包信号数量不够')
         signals.append(datapack[i].get('signal_intensity'))
     jd, wd = call_c_program(anchor_id, device_id, signals)
-    if jd.find('nan')!=-1 or wd.find('nan')!=-1:
+    if jd.find('nan') != -1 or wd.find('nan') != -1:
         raise ValueError('计算结果为NaN_jd:{}_wd:{}'.format(jd, wd))
 
     return jd, wd
@@ -42,10 +42,10 @@ def call_c_program(anchor_id, device_id, signals):
     a = Anchor.objects.get(a_id=anchor_id)
     d = Device.objects.get(d_number=device_id)
     # r_jd,r_wd = call_c(jd,wd,s_1,s_2,s_3,s_4,x_len,y_len,angle,A,N)
-    if platform.system()=="Windows":
-        pattern="call_exe.exe {} {} {} {} {} {} {} {}"
+    if platform.system() == "Windows":
+        pattern = "call_exe.exe {} {} {} {} {} {} {} {}"
     else:
-        pattern="call_bin {} {} {} {} {} {} {} {}"
+        pattern = "call_bin {} {} {} {} {} {} {} {}"
 
     sts = pattern.format(
         a.a_gps_jd, a.a_gps_wd,
@@ -55,8 +55,8 @@ def call_c_program(anchor_id, device_id, signals):
         d.d_CONST_A, d.d_CONST_N
     )
 
-    # cmd_stdout = subprocess.getoutput(os.path.join(os.path.dirname(os.path.abspath(__file__)), sts))
+    cmd_stdout = subprocess.getoutput(os.path.join(os.path.dirname(os.path.abspath(__file__)), sts))
 
-    # jd, wd = cmd_stdout.split(',')
-    # return jd, wd
-    return a.a_gps_jd, a.a_gps_wd
+    jd, wd = cmd_stdout.split(',')
+    return jd, wd
+    # return a.a_gps_jd, a.a_gps_wd
