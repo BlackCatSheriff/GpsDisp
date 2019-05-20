@@ -42,6 +42,7 @@ def get_gps(requests, device_id):
             ans["jd"] = jd
             ans["wd"] = wd
             ans["time"] = u_time
+            ans["type"] = d.d_located_style
 
     except Device.DoesNotExist:
         ans["msg"] = ENUM.get("NOT_FOUND_DEVICE")

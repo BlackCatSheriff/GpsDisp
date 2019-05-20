@@ -1,6 +1,7 @@
 #include<iostream>
-#include <cmath>  
-#include <cstdio>  
+#include <math.h>  
+#include <stdio.h>  
+#include <iomanip>
 #include <cstdlib>
 
 using namespace std;
@@ -18,14 +19,15 @@ class Point
 	public :double r ;//到指定点的距离
     };
 static Point call_c(double jd, double wd, double s_1, double s_2, double s_3, double s_4, double x_len, double y_len, double angle, double A, double N);
-static Point rotatePoint(Point p0, double angle, double jd, double wd);
+static Point plusPoint(Point p0, double jd, double wd);
+static Point rotatePoint(Point p0, double angle);
 static Point distanceAndPoint(double single, double A, double N, double x, double y);
 static Point getLocationByFour(Point p1, Point p2, Point p3, Point p4);
 static Point getLocationByThree(Point p1, Point p2, Point p3);
 static Point getPointByTwoLine(Line L1, Line L2);
 static Line getLineByTwoCircle(Point p1, Point p2);
 
-static double value [11];
+static double value [11] = {120,40, 0,0,0,0, 100,100, 0, 70.711,0} ;
 static Point pointOut;
 int main(int argc, char*argv[])
 {
@@ -40,7 +42,14 @@ int main(int argc, char*argv[])
 			value[a] = atof(argv[a+1]);
 		}
 		pointOut = call_c(value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9], value[10]);
-		cout<<pointOut.X<<","<<pointOut.Y<<endl;
+		cout<< fixed << setprecision(8)<<pointOut.X<<","<<pointOut.Y<<endl;
+	}
+	else
+	{
+		// cout<<"invalid data use default position "<<"120,40, 0,0,0,0, 100,100, 0, 70.711,0"<<endl;
+		//cin>>value[0]>>value[1]>>value[2]>>value[3]>>value[4]>>value[5]>>value[6]>>value[7]>>value[8]>>value[9]>>value[10];
+		pointOut = call_c(value[0], value[1], value[2], value[3], value[4], value[5], value[6], value[7], value[8], value[9], value[10]);
+		cout<< fixed << setprecision(8)<<pointOut.X<<","<<pointOut.Y<<endl;
 	}
 	return 0;
 }
@@ -55,12 +64,7 @@ static Point call_c(double jd, double wd, double s_1, double s_2, double s_3, do
      * 
      * s3(0,0)    x         s4(x,0)
      */
- /********/  	
-    y_len=y_len*0.000008983152841195214;
-	  x_len=x_len*0.000008983152841195214;
-	  x_len=x_len/cos(abs(wd));
- /********/  	  		
-	
+
     Point p1 = distanceAndPoint(s_1, A, N, 0.0, y_len);
     Point p2 = distanceAndPoint(s_2, A, N, x_len, y_len);
     Point p3 = distanceAndPoint(s_3, A, N, 0.0, 0.0);
@@ -73,23 +77,52 @@ static Point call_c(double jd, double wd, double s_1, double s_2, double s_3, do
     */
     //四点定位
     Point p = getLocationByFour(p1, p2, p3, p4);
-    p = rotatePoint(p, angle, jd, wd);
+	Point jwd;
+	if((p.X<p3.X)||(p.X>p4.X)||(p.Y<p3.Y)||(p.Y>p1.Y))//目标点不在范围内
+	{
+		jwd.X = jd;
+		jwd.Y = wd;
+	}
+	else
+	{
+		 p = rotatePoint(p,angle);//旋转
+		 jwd = plusPoint(p,jd,wd);//加入基准点，输出经纬度
+	}
+    return jwd;
+}
+
+static Point plusPoint(Point p0, double jd, double wd)//加入基准点，输出经纬度
+{
+	Point p;
+    p.X = p0.X / 111319.5  + jd ;//110.947
+    p.Y = p0.Y / 110947 + wd;
+    p.r = p0.r;
+	while(p.X<=-180)
+	{
+		p.X+=360;
+	}
+	while(p.X>180)
+	{
+		p.X-=360;
+	}
+	if(p.Y>90)
+	{
+		p.Y=90;
+	}
+	else if(p.Y<-90)
+	{
+		p.Y=-90;
+	}
     return p;
 }
 
-static Point rotatePoint(Point p0, double angle, double jd, double wd)
+static Point rotatePoint(Point p0, double angle)//旋转、加入基准点，输出经纬度
 {
     double anglePI = angle * 3.1415927 / 180;
     Point p;
-    p.X = p0.X * cos(anglePI) + p0.Y * sin(anglePI) + jd;
-    p.Y = p0.Y * cos(anglePI) - p0.X * sin(anglePI) + wd;
+    p.X = p0.X * cos(anglePI) + p0.Y * sin(anglePI);//110.947
+    p.Y = p0.Y * cos(anglePI) - p0.X * sin(anglePI);
     p.r = p0.r;
- /********/  
-    if(abs(p.X-jd)>2*abs(p.X))
-    p.X=jd;
-    if(abs(p.Y-wd)>2*abs(p.Y))		
-	  p.Y=wd;
-	/*******/
     return p;
 }
 
