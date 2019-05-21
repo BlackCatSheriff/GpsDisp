@@ -184,6 +184,11 @@ def jump_login(requests):
     return render(requests, 'login.html')
 
 
+def del_white_space(ss):
+    a = ss.split(" ")
+    return ''.join(a)
+
+
 @csrf_exempt
 def save_device_data(requests):
     code = "-1"
@@ -207,8 +212,8 @@ def save_device_data(requests):
                 r.a_gps_jd = tmp_jd
                 r.a_gps_wd = tmp_wd
             else:
-                r.a_gps_jd = post_data.get('gps_jd').replace(' ', '')
-                r.a_gps_wd = post_data.get('gps_wd').replace(' ', '')
+                r.a_gps_jd = del_white_space(str(post_data.get('gps_jd')))
+                r.a_gps_wd = del_white_space(str(post_data.get('gps_wd')))
             r.save()
             rowUploadRecord.successful = True
             code = "0"
@@ -225,3 +230,12 @@ def save_device_data(requests):
         rowUploadRecord.remark = '无效请求,不是POST'
         rowUploadRecord.save()
         return HttpResponse(code)
+
+
+def review_upload_data(requests):
+    try:
+        res = json.dumps(list(RowUpload.objects.values_list('content').order_by("-update_time")[:50]))
+        return HttpResponse(res, content_type="application/json")
+    except Exception as e:
+        print(e)
+        return HttpResponse("error requests!")

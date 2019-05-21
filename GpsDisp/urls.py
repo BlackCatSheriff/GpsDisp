@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/anchor/', main_view.handler_anchor),
     path('api/anchors/', main_view.get_all_anchors),
     path('api/device/upload/', main_view.save_device_data,name="upload_interface"),
+    path('api/device/upload/records/', main_view.review_upload_data,name="upload_interface_record"),
     path('api/user/', main_view.handler_user),
     path('api/user/logout/', main_view.user_logout),
     path('api/user/login/', main_view.user_login),
