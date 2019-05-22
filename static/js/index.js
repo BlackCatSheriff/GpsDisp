@@ -8,14 +8,14 @@ img_url['on'] = "images/icon-yes.svg";
 img_url['off'] = "images/icon-no.svg";
 img_url['wait'] = "images/icon-unknown.svg";
 img_url['overtime'] = "images/icon-alert.svg";
-
+let total_info={};
+// let total_info =
 
 $(document).ready(function () {
 
     $.get('/server/', {'config': 'static_url'}, function (data) {
         STATIC_URL = data;
     });
-
     $(".single-disp").parent().parent().parent().on("click", "a", function (event) {
         var target = $(event.target);
         var img = target.siblings("img");
@@ -24,58 +24,87 @@ $(document).ready(function () {
             alert('正在通信...请稍后...');
             return false;
         }
-        refresh(target, img, input);
+        refresh(target, img, input)
+        .then(data=>{
+            refresh_callback(target,img,input,data);
+            printTags();
+            moveDot(input.attr("_j"),input.attr("_w"));
+        })
     });
 
     init_devices();
 });
 
+function printTags(){
+    remove_overlay();
+    let ans = [];
+    for (let key in total_info) {
+        ans.push(total_info[key])        
+    }
+    transPositions(ans);
+}
+
+function moveDot(_j, _w) {
+    map.panTo(new BMap.Point(_j,_w));
+    map.setZoom(14);
+}
 
 function reload_all() {
     remove_overlay();
-
+    let p = [];
     $(".single-disp").each(function (i) {
         if (i != 0) {
-            $(this).click();
+            p.push(refresh($(this),$(this).siblings("img"),$(this).siblings("input")))
         }
     });
+    Promise.all(p).then(datas=>{
+        let index = 0;
+        $(".single-disp").each(function (i) {
+            if (i != 0) {
+                refresh_callback($(this),$(this).siblings("img"),$(this).siblings("input"),datas[index++]);
+            }
+        });
+        printTags();
+    })
 }
 
 
 function refresh(a, img, input) {
-    $.ajax({
-        type: "GET",
-        url: "/api/" + input.attr('_n'),
-        beforeSend: function () {
-            // alert("提交前");
-            a.attr('_forbidden', 'true');
-            img.attr("src", STATIC_URL + img_url['wait']);
-        },
-        dataType: "json",
-        success: function (data) {
-            if (data['msg'] == -2) {
-                img.attr('src', STATIC_URL + img_url['off']);
+    return new Promise((resolve,reject)=>{
+        $.ajax({
+            type: "GET",
+            url: "/api/" + input.attr('_n'),
+            beforeSend: function () {
+                a.attr('_forbidden', 'true');
+                img.attr("src", STATIC_URL + img_url['wait']);
+            },
+            dataType: "json",
+            success: function (data) {
+                resolve(data);
             }
-
-            else if (data['msg'] == 0) {
-                input.attr("_j", data['jd']);
-                input.attr("_w", data['wd']);
-                input.attr("_t", data['time']);
-                img.attr('src', STATIC_URL + img_url['on']);
-                var remark = "编号:" + input.attr('_n') + "<br>" + "经度:" + data['jd'] + "<br>" + "维度:" + data['wd'] + "<br>" + "最后更新时间:" + data['time'];
-                var point_bundle = [[data['jd'], data['wd'], remark,data['type']]];
-                transPositions(point_bundle);
-            }
-            else
-                img.attr('src', STATIC_URL + img_url['overtime']);
-
-            a.attr('_forbidden', 'false');
-        }
-
-
-    });
+        });
+    })
 }
 
+function refresh_callback(a, img, input,data){
+    if (data['msg'] == -2) {
+        img.attr('src', STATIC_URL + img_url['off']);
+    }
+    else if (data['msg'] == 0) {
+        input.attr("_j", data['jd']);
+        input.attr("_w", data['wd']);
+        input.attr("_t", data['time']);
+        img.attr('src', STATIC_URL + img_url['on']);
+        var remark = "编号:" + input.attr('_n') + "<br>" + "经度:" + data['jd'] + "<br>" + "维度:" + data['wd'] + "<br>" + "最后更新时间:" + data['time'];
+        var point_bundle = [data['jd'], data['wd'], remark,data['type']];
+        total_info[input.attr('_n')]=point_bundle;
+    }
+    else
+        img.attr('src', STATIC_URL + img_url['overtime']);
+
+    a.attr('_forbidden', 'false');
+
+}
 
 function init_devices() {
     $.ajax({
@@ -136,9 +165,11 @@ function transPositions(data_info) {
     // 坐标转换
     var points = [];
 
-    for (var i = 0; i < data_info.length; i++) {
+        for (var i = 0; i < data_info.length; i++) {
         points.push(new BMap.Point(data_info[i][0], data_info[i][1]))
     }
+
+
 
     //坐标转换完之后的回调函数
     translateCallback = function (data) {
@@ -187,9 +218,6 @@ function add_point_on_map(data_info, transposs) {
         var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象
         map.openInfoWindow(infoWindow, point); //开启信息窗口
     }
-
-    map.panTo(transposs[0]);
-    // map.setZoom(15);
 }
 
 function remove_overlay() {
