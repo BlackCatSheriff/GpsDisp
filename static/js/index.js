@@ -45,8 +45,13 @@ function printTags(){
 }
 
 function moveDot(_j, _w) {
-    map.panTo(new BMap.Point(_j,_w));
-    map.setZoom(14);
+    // map.panTo(new BMap.Point(_j,_w));
+    // map.setZoom(14);
+
+    	map.centerAndZoom(new BMap.Point(_j,_w),16);
+	// setTimeout(function(){
+	// 	map.setZoom(16);
+	// }, 1000);  //2秒后放大到14级
 }
 
 function reload_all() {
